@@ -1,0 +1,1852 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>교구 점검표 (2026)</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --line:#e6e8f0;
+      --text:#111827;
+      --muted:#6b7280;
+      --primary:#2563eb;
+      --primary-weak:#e8f0ff;
+      --danger:#b00020;
+      --shadow: 0 6px 20px rgba(17,24,39,.06);
+      --radius:14px;
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      font-family:"Noto Sans KR", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:var(--bg);
+    }
+
+    .wrap{
+      max-width: 1180px;
+      margin: 18px auto 40px;
+      padding: 0 14px;
+    }
+
+    header{
+      background:var(--card);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      border-radius: var(--radius);
+      padding:14px;
+      position: sticky;
+      top: 10px;
+      z-index: 20;
+    }
+
+    .headerTop{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-bottom:12px;
+    }
+
+    .titleRow{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      min-width:0;
+      flex:1 1 auto;
+    }
+
+    .headerActionsTop{
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      gap:10px;
+      flex-wrap:wrap;
+      flex:0 0 auto;
+    }
+    h1{
+      font-size:18px;
+      margin:0;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    .badge{
+      font-size:12px;
+      padding:4px 8px;
+      border-radius:999px;
+      background:var(--primary-weak);
+      color:var(--primary);
+      font-weight:700;
+      line-height:1.35;
+    }
+    .modeTabs{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      align-items:center;
+    }
+
+    .modeBtn{
+      border:1px solid var(--line);
+      background:#fff;
+      padding:0 14px;
+      height:44px;
+      border-radius:999px;
+      cursor:pointer;
+      font-weight:800;
+      font-size:13px;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--text);
+      transition:all .15s ease;
+    }
+
+    .modeBtn:hover{
+      background:#f8faff;
+      border-color:#cfd8ea;
+    }
+
+    .modeBtn.active{
+      background: var(--primary);
+      color:#fff;
+      border-color: var(--primary);
+    }
+
+    .modeBtn.link{
+      color:#6b7280;
+    }
+
+    .headerMid{
+      display:grid;
+      grid-template-columns: 0.8fr 1.2fr 0.8fr 0.8fr;
+      gap:10px;
+      align-items:center;
+      margin-bottom:12px;
+    }
+
+    .fieldBox{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      min-width:0;
+    }
+
+    .fieldBox label{
+      color:var(--muted);
+      font-size:13px;
+      white-space:nowrap;
+      flex:0 0 auto;
+    }
+
+    .fieldBox input{
+      width:100%;
+      min-width:0;
+    }
+
+    .copyBox{
+      display:none;
+    }
+
+    .headerBottom{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .tabs{
+      display:flex;
+      gap:8px;
+      margin-top:0;
+      flex-wrap:wrap;
+    }
+
+    .tab{
+      border:1px solid var(--line);
+      background:#fff;
+      padding:8px 10px;
+      border-radius:999px;
+      cursor:pointer;
+      font-weight:800;
+      font-size:13px;
+    }
+
+    .tab[aria-selected="true"]{
+      background: var(--primary-weak);
+      border-color: rgba(37,99,235,.25);
+      color: var(--primary);
+    }
+
+    .actionBtns{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    input[type="text"], input[type="number"], textarea{
+      font-family: inherit;
+      border:1px solid var(--line);
+      border-radius:10px;
+      padding:8px 10px;
+      background:#fff;
+      color:var(--text);
+      outline:none;
+    }
+
+    textarea{
+      width:100%;
+      resize:vertical;
+      min-height:72px;
+      white-space: pre-wrap;
+    }
+
+    .btn{
+      border:1px solid var(--line);
+      background:#fff;
+      padding:0 14px;
+      min-height:44px;
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:700;
+      white-space:nowrap;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      transition:all .15s ease;
+    }
+
+    .btn:hover{
+      background:#f8faff;
+      border-color:#cfd8ea;
+    }
+
+    .btn.primary{
+      border-color: transparent;
+      background: var(--primary);
+      color:#fff;
+    }
+
+    .btn.primary:hover{
+      filter:brightness(0.98);
+    }
+
+    .btn.ghost{
+      background: transparent;
+    }
+
+    .btn.danger{
+      border-color: rgba(176,0,32,.25);
+      color: var(--danger);
+      background: #fff;
+    }
+
+    .btn:active{ transform: translateY(1px); }
+
+    .layout{
+      display:grid;
+      grid-template-columns: 340px 1fr;
+      gap:14px;
+      margin-top:14px;
+    }
+
+    .panel{
+      background:var(--card);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      border-radius: var(--radius);
+      padding:14px;
+      min-height: 420;
+    }
+
+    .panel h2{
+      margin:0 0 10px;
+      font-size:15px;
+    }
+
+    .help{
+      font-size:12px;
+      color:var(--muted);
+      margin:6px 0 0;
+      line-height:1.45;
+    }
+
+    .filterRow{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-bottom:10px;
+    }
+
+    .list{
+      border:1px solid var(--line);
+      border-radius: 12px;
+      overflow:hidden;
+    }
+
+    .listHead{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:10px 10px;
+      background:#fafbff;
+      border-bottom:1px solid var(--line);
+      font-weight:800;
+      font-size:13px;
+    }
+
+    .listBody{
+      max-height: 560px;
+      overflow:auto;
+      padding:8px;
+      background:#fff;
+    }
+
+    .item{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      padding:10px 10px;
+      border-radius:12px;
+      cursor:pointer;
+      user-select:none;
+    }
+
+    .item:hover{ background:#f7f8ff; }
+
+    .item strong{
+      font-size:13px;
+      font-weight:800;
+    }
+
+    .tabPanel{
+      height: auto;
+      max-height: calc(100vh - 260px);
+      overflow:auto;
+      padding-right:6px;
+    }
+
+    .contentTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:10px;
+      position: sticky;
+      top: 0;
+      background: var(--card);
+      padding: 6px 0 10px;
+      z-index: 3;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .count{
+      font-weight:900;
+      color:var(--primary);
+    }
+
+    .card{
+      border:1px solid var(--line);
+      border-radius: 14px;
+      padding:12px;
+      background:#fff;
+      margin-bottom:12px;
+    }
+
+    .cardTitle{
+      display:flex;
+      align-items:center;
+      justify-content:flex-start;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-bottom:10px;
+    }
+
+    .cardTitle h3{
+      margin:0;
+      font-size:15px;
+      font-weight:800;
+      line-height:1.3;
+      flex:0 0 auto;
+    }
+
+    .mini{
+      font-size:12px;
+      color:var(--muted);
+      font-weight:700;
+    }
+
+    .rowInputs{
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap:10px;
+    }
+
+    .inField{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      padding:6px 10px;
+      border:1px solid var(--line);
+      border-radius: 12px;
+      background:#fff;
+    }
+
+    .inField span{
+      font-size:12px;
+      color:var(--muted);
+      font-weight:900;
+      white-space:nowrap;
+    }
+
+    .inField input{
+      width:72px;
+      max-width:72px;
+      padding:6px 6px;
+      text-align:center;
+    }
+
+    table{
+      width:100%;
+      border-collapse: collapse;
+      border:1px solid var(--line);
+      border-radius: 12px;
+      overflow:hidden;
+      background:#fff;
+    }
+
+    th, td{
+      border-bottom:1px solid var(--line);
+      padding:10px 10px;
+      font-size:13px;
+      vertical-align:top;
+    }
+
+    th{
+      background:#fafbff;
+      text-align:left;
+      color:#374151;
+      font-weight:900;
+    }
+
+    tr:last-child td{ border-bottom:none; }
+
+    .mono{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      white-space: pre-wrap;
+      font-size: 12.5px;
+      border:1px solid var(--line);
+      border-radius: 12px;
+      padding:12px;
+      background:#fff;
+    }
+
+    .sectionTop{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      margin:14px 0 8px;
+    }
+
+    .sectionTop h2{
+      margin:0;
+      font-size:15px;
+    }
+
+    .emptyBox{
+      border:1px dashed var(--line);
+      border-radius:12px;
+      padding:18px;
+      color:var(--muted);
+      background:#fafbff;
+      font-size:13px;
+    }
+
+    .printArea{ display:none; }
+
+    .infoNoteBox{
+      margin:8px 0 8px;
+      padding:10px 10px;
+      border:1px solid var(--line);
+      border-radius:12px;
+      background:#fafbff;
+    }
+
+    .infoNoteTitle{
+      font-size:16px;
+      font-weight:800;
+      color:var(--text);
+      margin-bottom:6px;
+    }
+
+    .infoNoteContent{
+      white-space:pre-line;
+      font-size:14px;
+      line-height:1.5;
+      color:#374151;
+    }
+
+    .programTags{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      flex-wrap:wrap;
+      margin-left:2px;
+    }
+
+    .programTag{
+      font-size:11px;
+      padding:2px 8px;
+      border-radius:10px;
+      font-weight:700;
+      white-space:nowrap;
+      margin-left:0;
+      display:inline-flex;
+      align-items:center;
+    }
+    .tag-career{
+      background:#edf3ff;
+      color:#2f6df6;
+    }
+
+    .tag-subject{
+      background:#f4ecff;
+      color:#7a3df0;
+    }
+
+    .tag-sustain{
+      background:#eafaf0;
+      color:#1e9e55;
+    }
+
+    .tag-elementary{
+      background:#fff4e8;
+      color:#f28b24;
+    }
+
+    .tag-camp{
+      background:#f5f6f8;
+      color:#5a6168;
+    }
+
+    .tag-booth{
+      background:#fff8e5;
+      color:#b38b00;
+    }
+
+    .tag-civic{
+      background:#eef1f8;
+      color:#2f3e73;
+    }
+
+    @page{
+      size: A4;
+      margin: 14mm 12mm 14mm 12mm;
+    }
+
+    .printSheet{
+      width:100%;
+    }
+
+    .printHead{
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #111827;
+    }
+
+    .printHeadTitle{
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .printMeta{
+      display:grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap:10px;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .printMeta div{
+      line-height:1.4;
+    }
+
+    .printProgram{
+      margin-bottom: 14px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .printProgramTitle{
+      font-size: 15px;
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+
+    .printProgramContent{
+      white-space: pre-wrap;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .printSummary{
+      margin-top: 16px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .printSummaryTitle{
+      font-size: 15px;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .printSummaryLine{
+      font-size: 15px;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .printExtraBlock{
+      white-space: pre-wrap;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 980px){
+      .layout{
+        grid-template-columns:1fr;
+      }
+
+      header{
+        position:static;
+      }
+
+      .headerTop{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .headerActionsTop{
+        width:100%;
+        justify-content:flex-start;
+      }
+
+      .modeTabs{
+        justify-content:flex-start;
+      }
+
+      .headerMid{
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .headerBottom{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .actionBtns{
+        width:100%;
+      }
+
+      .tabPanel{
+        height:auto;
+        min-height:auto;
+        overflow:visible;
+      }
+
+      .rowInputs{
+        grid-template-columns: 1fr 1fr;
+      }
+      .headerMid{
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .copyBox{
+        grid-column: 1 / -1;
+        justify-content:flex-start;
+      }
+    }
+
+    @media print{
+      .no-print{ display:none !important; }
+      .programTags{ display:none !important; }
+      body{ background:#fff; }
+      .wrap{ max-width:none; margin:0; padding:0; }
+      header{ display:none !important; }
+      .panel{
+        box-shadow:none;
+        border-radius:0;
+        border:none;
+        padding:0;
+        min-height:auto;
+      }
+      .layout{ grid-template-columns:1fr; }
+      .tabPanel{ display:none !important; }
+      .printArea{ display:block !important; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="wrap">
+  <header class="no-print">
+    <div class="headerTop">
+      <div class="titleRow">
+        <h1>교구 점검표</h1>
+        <span class="badge">수업/부스 선택 → 학교 정보 입력 → 프로그램 선택 → 복사 후 공유</span>
+      </div>
+
+      <div class="headerActionsTop">
+        <div class="modeTabs">
+          <a href="https://kikida0.github.io/EduKits/" class="modeBtn link">자료실</a>
+          <button class="modeBtn active" id="modeLesson">수업용</button>
+          <button class="modeBtn" id="modeBooth">부스용</button>
+        </div>
+
+        <button class="btn primary" id="btnCopy">톡용 복사</button>
+      </div>
+    </div>
+
+    <div class="headerMid">
+      <div class="fieldBox">
+        <label for="date">날짜</label>
+        <input id="date" type="text" placeholder="예: 12/22" />
+      </div>
+
+      <div class="fieldBox">
+        <label for="school">학교명</label>
+        <input id="school" type="text" placeholder="예: 대전 탄방중" />
+      </div>
+
+      <div class="fieldBox">
+        <label for="session">차시</label>
+        <input id="session" type="text" placeholder="예: 2차시" />
+      </div>
+
+
+      <div class="fieldBox">
+        <label for="people">인원(전체)</label>
+        <input id="people" type="number" min="0" step="1" placeholder="예: 30" />
+      </div>
+    </div>
+
+    <div class="headerBottom">
+      <div class="tabs" role="tablist" aria-label="탭">
+        <button class="tab" id="tabAssign" aria-selected="true">프로그램 배정</button>
+        <button class="tab" id="tabTotals" aria-selected="false">전자기기 및 추가 항목</button>
+        <button class="tab" id="tabPreview" aria-selected="false">문구 미리보기</button>
+      </div>
+
+      <div class="actionBtns">
+        <button class="btn" id="btnPrint">출력</button>
+        <button class="btn danger" id="btnReset">초기화</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="panel no-print">
+      <h2>프로그램 선택</h2>
+
+      <div class="filterRow">
+        <input id="search" type="text" placeholder="프로그램 검색" style="width:100%;" />
+      </div>
+      <div class="filterRow">
+        <button class="btn" id="btnAll">전체선택</button>
+        <button class="btn ghost" id="btnNone">해제</button>
+      </div>
+
+      <div class="list">
+        <div class="listHead">
+          <span>목록</span>
+          <span class="mini">선택: <span id="pickedCount">0</span></span>
+        </div>
+        <div class="listBody" id="programList"></div>
+      </div>
+    </aside>
+
+    <main class="panel">
+      <div class="printArea" id="printArea"></div>
+
+      <div id="panelAssign" class="tabPanel">
+        <div class="contentTop">
+          <div>
+            <h2 style="margin:0;">선택된 프로그램 배정</h2>
+            <div class="help" id="modeHelpAssign">노트북/태블릿/스마트폰/인원은 한 줄, 메모는 아래에 입력합니다.</div>
+          </div>
+          <div class="mini"><span id="modeLabelAssign">수업용</span> 현재 <span class="count" id="selectedCount2">0</span>개 선택</div>
+        </div>
+
+        <div id="assignCards"></div>
+      </div>
+
+      <div id="panelTotals" class="tabPanel" style="display:none;">
+        <div class="contentTop">
+          <div>
+            <h2 style="margin:0;">전자기기 및 추가 항목</h2>
+            <div class="help" id="modeHelpTotals">노트북/태블릿/스마트폰은 항상 표시됩니다. (여분도 여기서 입력 가능)</div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;">
+          <table>
+            <thead>
+              <tr><th>항목</th><th style="width:180px;">수량</th><th style="width:130px;">구분</th></tr>
+            </thead>
+            <tbody id="totalsTable"></tbody>
+          </table>
+        </div>
+
+        <div class="infoNoteBox">
+          <div class="infoNoteTitle" id="infoTitle">참고 사항</div>
+          <div class="infoNoteContent" id="infoContent"></div>
+        </div>
+
+        <div class="sectionTop">
+          <h2 id="extrasTitle">💡추가</h2>
+          <button class="btn no-print" id="btnAddExtra">+ 추가 교구</button>
+        </div>
+
+        <table>
+          <thead>
+            <tr><th>항목</th><th style="width:180px;">수량</th><th style="width:120px;" class="no-print">삭제</th></tr>
+          </thead>
+          <tbody id="extrasTable"></tbody>
+        </table>
+      </div>
+
+      <div id="panelPreview" class="tabPanel" style="display:none;">
+        <div class="contentTop">
+          <div>
+            <h2 style="margin:0;">문구 미리보기</h2>
+          </div>
+        </div>
+        <div id="previewBox" class="mono"></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+  const STORAGE_KEY = "able_equipment_check_v_mode_split";
+
+  const LESSON_INFO_NOTE = `
+🔹교과 연계(융합), 지속가능발전 프로그램은 전용 현수막 지참
+`.trim();
+
+  const BOOTH_INFO_NOTE = `
+🔸부스 전용 현수막과 부착을 위한 테이프, 가위 지참
+`.trim();
+
+  const LESSON_PROGRAM_MASTER = [
+    { id:"p01", name:"신소재(메타물질)", tags:["진로","교과"], notes:"신소재 키트(나무판, 풍량 측정기, 칼·가위, 테이프, 글루건, 색종이, 수수깡 10봉지), 우드락판, 선풍기, 멀티탭, 보조배터리, AAA건전지\n🔎 소모품: 색종이, 수수깡, 글루건심, AAA건전지" },
+    { id:"p02", name:"반도체", tags:["진로","교과"], notes:"반도체 키트(브레드보드 세트, 배터리케이스, 수수케이블 13개), AA건전지, 여분(수수케이블, 배터리케이스, 소자 부품)\n회로 설계: 태블릿" },
+    { id:"p03", name:"의공학", tags:["진로","교과"], notes:"의공학 키트(거짓말 탐지기, GSR, 심전도), 노트북, 충전기·마우스, 멀티탭, AA건전지\n🔎 소모품: 심전도 패치, 암수케이블, AA건전지\n* 중등: 메이키메이키 키트(보드, 메이키보드 케이블, 악어클립, 호일, 알루미늄 테이프)" },
+    { id:"p04", name:"스마트 팩토리", tags:["진로","지속가능"], notes:"스마트팜용 유킷, 기물, 스마트폰" },
+    { id:"p05", name:"신재생 에너지", tags:["진로","지속가능"], notes:"신재생 키트(레고브릭, 절연테이프, 색테이프, 네임펜, 글루건), 할로겐등, 태양광판+USB선풍기, 바퀴, 멀티탭\n* 창작: 똑상2 키트(글루건, 싸인펜·색연필, 매직, 수수깡 10봉지, 칼·가위, 테이프, 30cm 자), 멀티탭, 폼보드" },
+    { id:"p06", name:"제약 연구", tags:["진로","교과"], notes:"제약카드 10세트, 전자기기(태블릿·스마트폰)" },
+    { id:"p07", name:"머신러닝", tags:["진로","교과","지속가능"], notes:"노트북, 충전기·마우스, 멀티탭, 포스트잇\n* 컴퓨터실: 웹캠, 포스트잇\n* 초등: 태블릿" },
+    { id:"p08", name:"AI 운동·게임", tags:["진로","초등"], notes:"태블릿" },
+    { id:"p09", name:"인공지능 딥러닝", tags:["진로","교과"], notes:"태블릿" },
+    { id:"p10", name:"똑똑한 상상이룸", tags:["캠프"], notes:"노트북, 충전기·마우스, 멀티탭, 폼보드, 똑상1 키트(아두이노, LED, 서보모터, 아두이노 케이블, 점퍼 케이블)\n똑상2 키트(글루건, 싸인펜·색연필, 매직, 수수깡 10봉지, 칼·가위, 테이프, 30cm 자)\n🔎 소모품 : 폼보드, 수수깡" },
+    { id:"p11", name:"프롬프트 엔지니어", tags:["진로","교과","지속가능"], notes:"노트북, 충전기·마우스, 멀티탭, A4용지\n* 컴퓨터실: A4용지" },
+    { id:"p12", name:"디지털기기 활용", tags:["진로","초등"], notes:"-" },
+    { id:"p13", name:"디지털 리터러시", tags:["진로","민주시민"], notes:"유인물-카피라이터, 전자기기(태블릿·스마트폰)" },
+    { id:"p14", name:"빅데이터", tags:["진로","초등"], notes:"포스트잇, 전자기기(태블릿·스마트폰)" },
+    { id:"p15", name:"빅데이터 경제", tags:["진로", "민주시민"], notes:"빅경 키트(양세찬 게임 머리띠+주식 유인물, 보드마카)\n포스트잇, 볼펜" },
+    { id:"p16", name:"빅데이터 분석", tags:["진로","민주시민"], notes:"유인물, 전자기기(태블릿·스마트폰)" },
+    { id:"p17", name:"정보보안", tags:["진로","민주시민"], notes:"금고, 포스트잇, 전자기기(태블릿·스마트폰)\n⚠️ 확인: ZEP 비밀번호 확인 및 금고 간식 보상 세팅 必" },
+    { id:"p18", name:"RSA 암호", tags:["교과"], notes:"유인물-RSA 암호 제작, 전자기기(태블릿·스마트폰)" },
+    { id:"p19", name:"메타버스", tags:["진로"], notes:"탈출용 머지큐브, 전자기기(태블릿·스마트폰)" },
+    { id:"p20", name:"VR", tags:["진로","교과","지속가능"], notes:"카드보드(갈색/파랑), 돌돌이 테이프, 리필용 테이프,\n전자기기(태블릿·스마트폰)\n⚠️ 확인: 카드보드 학급 파악" },
+    { id:"p21", name:"AR", tags:["진로"], notes:"머지큐브, 전자기기(태블릿·스마트폰)" },
+    { id:"p22", name:"VR+홀로그램", tags:["진로","초등"], notes:"카드보드(갈색/파랑), 돌돌이 테이프, 홀로그램\n전자기기(태블릿·스마트폰)" },
+    { id:"p23", name:"콘텐츠 기획", tags:["진로","민주시민"], notes:"유인물-콘텐츠 기획" },
+    { id:"p24", name:"스토리 기획", tags:["진로"], notes:"딕싯, 유인물-스토리 기획" },
+    { id:"p25", name:"크리에이티브 광고 기획", tags:["진로"], notes:"과자, 크로마키, 유인물-광고 기획\n전자기기(태블릿·스마트폰)" },
+    { id:"p26", name:"미디어 광고 제작·더빙", tags:["진로","초등"], notes:"전자기기(태블릿·스마트폰)" },
+    { id:"p27", name:"게임 기획", tags:["진로"], notes:"노트북, 충전기·마우스, 멀티탭" },
+    { id:"p28", name:"게임 개발(엔트리)", tags:["진로","초등"], notes:"노트북, 충전기·마우스, 멀티탭\n* 초등 : 태블릿" },
+    { id:"p29", name:"앱 개발", tags:["진로","지속가능"], notes:"전자기기(태블릿·스마트폰)" },
+    { id:"p30", name:"앱 디자인", tags:["진로"], notes:"전자기기(태블릿·스마트폰)" },
+    { id:"p31", name:"시뮬레이션", tags:["교과"], notes:"노트북, 충전기·마우스, 멀티탭" },
+    { id:"p32", name:"메이커", tags:["진로"], notes:"네오봇 키트, 네오봇 통(2인 1조), 전자기기(태블릿·스마트폰)" },
+    { id:"p33", name:"로고 디자인", tags:["진로"], notes:"유인물-기업정보, 포토프린터, 카트리지, 멀티탭, 전자기기(태블릿·스마트폰)\n🔎 소모품: 카트리지(잉크, 용지)\n⚠️ 확인: 포토프린터용 스마트폰 배터리 확인" },
+    { id:"p34", name:"애니메이터", tags:["진로"], notes:"전자기기(태블릿·스마트폰)" },
+    { id:"p35", name:"시각디자인(퀴버)", tags:["진로","초등"], notes:"퀴버 키트(유인물-도안, 색연필), 전자기기(태블릿·스마트폰)" },
+    { id:"p36", name:"시각디자인(AI 캐릭터)", tags:["진로"], notes:"전자기기(태블릿·스마트폰)" },
+    { id:"p37", name:"인포메이션 디자인", tags:["진로","교과","지속가능","민주시민"], notes:"유인물-UI/UX 분석, 전자기기(태블릿·스마트폰)" },
+    { id:"p38", name:"3D설계 모델링", tags:["진로","지속가능"], notes:"3D 키트(3D펜, 어댑터·케이블, 필라멘트, 장갑, 가위, 도안), 멀티탭\n🔎 소모품: 필라멘트" },
+    { id:"p39", name:"3D설계 건축", tags:["교과"], notes:"3D 키트(펜, 어댑터·케이블, 필라멘트, 장갑, 가위, 도안), ⚠️진동기 (사용여부 확인),멀티탭" },
+    { id:"p40", name:"로봇", tags:["진로","교과"], notes:"유킷 or 지무, 유킷통, 배틀맵, 전자기기(태블릿·스마트폰)\n* 네오봇: 자율주행 키트와 동일" },
+    { id:"p41", name:"디지털 헬스", tags:["진로","지속가능"], notes:"측정 키트 8세트 구성(악력기, 산소포화도, 혈압, 민첩성, 자), AAA건전지, 유인물-디지털헬스" },
+    { id:"p42", name:"자율주행", tags:["진로","지속가능"], notes:"네오봇, 네오봇통(4인 1조), 주행맵, 전자기기(태블릿·스마트폰)" },
+    { id:"p43", name:"스타트업 설계", tags:["진로"], notes:"전자기기(태블릿·스마트폰)" },
+    { id:"p44", name:"IMC(통합 마케팅 커뮤니케이션)", tags:["진로"], notes:"IMC 키트(화이트보드, 보드마카, 상세표), 유인물-IMC견적, 전자기기(태블릿·스마트폰)" },
+    { id:"p45", name:"경제 전략", tags:["진로","교과","민주시민"], notes:"유인물-경제전략, 경제전략 키트(판사봉, 마이크)" },
+    { id:"p46", name:"정책 연구", tags:["진로","교과","민주시민"], notes:"유인물-정책 점수표" },
+    { id:"p47", name:"바이오 파이썬", tags:["교과"], notes:"전자기기(태블릿·스마트폰)" },
+    { id:"p48", name:"모빌리티", tags:["캠프"], notes:"노트북, 충전기·마우스, 멀티탭, 라인트레이서 확인필요" },
+  ];
+
+  const BOOTH_PROGRAM_MASTER = [
+    { id:"b01", name: "배틀로 배우는 로봇 공학", tags:["부스"], notes: "유킷 or 지무, 유킷통, 배틀맵, 전자기기(태블릿·스마트폰)\n* 네오봇: 자율주행 키트와 동일" },
+    { id:"b02", name: "VR로 만나는 가상현실", tags:["부스"], notes: "카드보드(갈색/파랑), 돌돌이 테이프, 리필용 테이프,\n전자기기(태블릿·스마트폰)\n⚠️ 확인: 카드보드 학급 파악" },
+    { id:"b03", name: "증강현실 놀이터", tags:["부스"], notes: "해당 교구 확인필요 | 퀴버 키트(유인물-도안, 색연필), 전자기기(태블릿·스마트폰)" },
+    { id:"b04", name: "코딩으로 배우는 자율주행", tags:["부스"], notes: "네오봇, 네오봇통(4인 1조), 주행맵, 전자기기(태블릿·스마트폰)" },
+    { id:"b05", name: "메타버스 운동회", tags:["부스"], notes: "중계용 모니터, 전자기기(태블릿·스마트폰)" },
+    { id:"b06", name: "3D펜으로 만드는 입체 세계", tags:["부스"], notes: "3D 키트(3D펜, 어댑터·케이블, 필라멘트, 장갑, 가위, 도안), 멀티탭\n🔎 소모품: 필라멘트" },
+    { id:"b07", name: "디지털 디자이너", tags:["부스"], notes: "전자기기(태블릿·스마트폰)" },
+    { id:"b08", name: "AI와 애니메이션", tags:["부스"], notes: "전자기기(태블릿·스마트폰)" },
+    { id:"b09", name: "AI 닮은꼴 체험", tags:["부스"], notes: "설명용 모니터, 노트북, 충전기·마우스, 멀티탭\n태블릿" },
+    { id:"b10", name: "로봇팔로 배우는 스마트 공장", tags:["부스"], notes: "스마트팜용 유킷, 기물, 스마트폰" },
+  ];
+
+  const TABLET_PER_PERSON_LESSON = new Set([
+    "반도체", "AI 운동·게임", "게임 개발(엔트리)",
+    "로고 디자인", "애니메이터", "시각디자인(퀴버)", "시각디자인(AI 캐릭터)", "인포메이션 디자인"
+  ]);
+
+  const LAPTOP_HALF_LESSON = new Set([
+    "의공학", "머신러닝", "똑똑한 상상이룸", "모빌리티"
+  ]);
+
+  const LAPTOP_PER_PERSON_LESSON = new Set([
+    "프롬프트 엔지니어", "시뮬레이션"
+  ]);
+
+  const SMARTPHONE_PER_PERSON_LESSON = new Set([
+    "스마트 팩토리", "로봇", "자율주행", "VR+홀로그램", "앱 개발"
+  ]);
+
+  const TABLET_PER_PERSON_BOOTH = new Set([
+    "메타버스 운동회", "AI 닮은꼴 체험", "AI와 애니메이션", "증강현실 놀이터"
+  ]);
+
+  const LAPTOP_HALF_BOOTH = new Set([
+    "AI 닮은꼴 체험"
+  ]);
+
+  const LAPTOP_PER_PERSON_BOOTH = new Set([]);
+
+  const SMARTPHONE_PER_PERSON_BOOTH = new Set([
+    "배틀로 배우는 로봇 공학", "VR로 만나는 가상현실", "코딩으로 배우는 자율주행", "로봇팔로 배우는 스마트 공장"
+  ]);
+
+  const DEFAULT_MODE_DATA = {
+    lesson: {
+      meta: { school:"", session:"", date:"", people:0 },
+      selected: [],
+      programData: {},
+      totalsOverrides: {},
+      extrasDevices: { laptop:0, tablet:0, smartphone:0 },
+      extras: [
+        { item:"카트", qty:1 },
+        { item:"생수", qty:1 },
+        { item:"현수막(진로/교과/지속)", qty:1 },
+        { item:"HDMI선", qty:1 },
+      ]
+    },
+    booth: {
+      meta: { school:"", session:"", date:"", people:0 },
+      selected: [],
+      programData: {},
+      totalsOverrides: {},
+      extrasDevices: { laptop:0, tablet:0, smartphone:0 },
+      extras: [
+        { item:"카트", qty:1 },
+        { item:"생수", qty:1 },
+        { item:"현수막(부스)", qty:1 },
+        { item:"릴선", qty:1 },
+        { item:"HDMI선", qty:1 },
+      ]
+    }
+  };
+
+  function deepClone(o){ return JSON.parse(JSON.stringify(o)); }
+
+  function getProgramsByMode(mode){
+    return mode === "lesson" ? LESSON_PROGRAM_MASTER : BOOTH_PROGRAM_MASTER;
+  }
+
+  function getSetsByMode(mode){
+    if(mode === "lesson"){
+      return {
+        tablet: TABLET_PER_PERSON_LESSON,
+        laptopHalf: LAPTOP_HALF_LESSON,
+        laptopPer: LAPTOP_PER_PERSON_LESSON,
+        smartphone: SMARTPHONE_PER_PERSON_LESSON
+      };
+    }
+    return {
+      tablet: TABLET_PER_PERSON_BOOTH,
+      laptopHalf: LAPTOP_HALF_BOOTH,
+      laptopPer: LAPTOP_PER_PERSON_BOOTH,
+      smartphone: SMARTPHONE_PER_PERSON_BOOTH
+    };
+  }
+
+  function getModeLabel(mode){
+    return mode === "lesson" ? "수업용" : "부스용";
+  }
+
+  function getAutoDeviceDefaults(mode, programName, people){
+    const p = Math.max(0, Number(people)||0);
+    const sets = getSetsByMode(mode);
+    let laptop = 0;
+    let tablet = 0;
+    let smartphone = 0;
+
+    if(sets.tablet.has(programName)) tablet = p;
+    if(sets.laptopHalf.has(programName)) laptop = Math.ceil(p / 2);
+    if(sets.laptopPer.has(programName)) laptop = p;
+    if(sets.smartphone.has(programName)) smartphone = p;
+
+    return { laptop, tablet, smartphone };
+  }
+
+  function makeDefaultProgramData(mode, program, people){
+    const auto = getAutoDeviceDefaults(mode, program.name, people);
+    return {
+      students: Number.isFinite(people) ? people : 0,
+      notes: program.notes || "",
+      laptop: auto.laptop,
+      tablet: auto.tablet,
+      smartphone: auto.smartphone,
+    };
+  }
+
+  function clampInt(v){
+    const n = Number(String(v).replace(/[^0-9-]/g,""));
+    if(!Number.isFinite(n)) return 0;
+    return Math.max(0, Math.trunc(n));
+  }
+
+  function normalizeProgramData(d, p){
+    if(typeof d.students !== "number") d.students = 0;
+    if(typeof d.notes !== "string") d.notes = p.notes || "";
+    if(typeof d.laptop !== "number") d.laptop = 0;
+    if(typeof d.tablet !== "number") d.tablet = 0;
+    if(typeof d.smartphone !== "number") d.smartphone = 0;
+  }
+
+  function buildModeData(mode){
+    const base = deepClone(DEFAULT_MODE_DATA[mode]);
+    const people = clampInt(base.meta.people);
+    const programs = getProgramsByMode(mode);
+    for(const p of programs){
+      base.programData[p.id] = makeDefaultProgramData(mode, p, people);
+    }
+    return base;
+  }
+
+  function initState(){
+    return {
+      mode: "lesson",
+      lesson: buildModeData("lesson"),
+      booth: buildModeData("booth")
+    };
+  }
+
+  function loadState(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) return initState();
+
+      const parsed = JSON.parse(raw);
+
+      if(parsed && parsed.mode && parsed.lesson && parsed.booth){
+        const base = initState();
+        base.mode = parsed.mode === "booth" ? "booth" : "lesson";
+        base.lesson = { ...base.lesson, ...(parsed.lesson || {}) };
+        base.booth = { ...base.booth, ...(parsed.booth || {}) };
+
+        for(const mode of ["lesson","booth"]){
+          const programs = getProgramsByMode(mode);
+          const current = base[mode];
+
+          current.meta = { school:"", session:"", date:"", people:0, ...(current.meta||{}) };
+          current.selected = Array.isArray(current.selected) ? current.selected : [];
+          current.programData = current.programData || {};
+          current.totalsOverrides = current.totalsOverrides || {};
+          current.extrasDevices = current.extrasDevices || { laptop:0, tablet:0, smartphone:0 };
+          current.extras = Array.isArray(current.extras) ? current.extras : deepClone(DEFAULT_MODE_DATA[mode].extras);
+
+          for(const p of programs){
+            if(!current.programData[p.id]){
+              current.programData[p.id] = makeDefaultProgramData(mode, p, clampInt(current.meta.people));
+            }else{
+              normalizeProgramData(current.programData[p.id], p);
+            }
+          }
+        }
+        return base;
+      }
+
+      if(parsed && parsed.meta && parsed.programData){
+        const migrated = initState();
+        migrated.mode = "lesson";
+        migrated.lesson.meta = { ...migrated.lesson.meta, ...(parsed.meta || {}) };
+        migrated.lesson.selected = Array.isArray(parsed.selected) ? parsed.selected : [];
+        migrated.lesson.programData = parsed.programData || {};
+        migrated.lesson.totalsOverrides = parsed.totalsOverrides || {};
+        migrated.lesson.extrasDevices = parsed.extrasDevices || { laptop:0, tablet:0, smartphone:0 };
+        migrated.lesson.extras = Array.isArray(parsed.extras) ? parsed.extras : deepClone(DEFAULT_MODE_DATA.lesson.extras);
+
+        for(const p of LESSON_PROGRAM_MASTER){
+          if(!migrated.lesson.programData[p.id]){
+            migrated.lesson.programData[p.id] = makeDefaultProgramData("lesson", p, clampInt(migrated.lesson.meta.people));
+          }else{
+            normalizeProgramData(migrated.lesson.programData[p.id], p);
+          }
+        }
+
+        return migrated;
+      }
+
+      return initState();
+    }catch{
+      return initState();
+    }
+  }
+
+  function saveState(){
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  function escapeHtml(s){
+    return String(s)
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#39;");
+  }
+
+  let state = loadState();
+
+  function getCurrentData(){
+    return state[state.mode];
+  }
+
+  function getCurrentPrograms(){
+    return getProgramsByMode(state.mode);
+  }
+
+  const elSchool = document.getElementById("school");
+  const elSession = document.getElementById("session");
+  const elDate = document.getElementById("date");
+  const elPeople = document.getElementById("people");
+
+  const elSearch = document.getElementById("search");
+  const elProgramList = document.getElementById("programList");
+  const elPickedCount = document.getElementById("pickedCount");
+
+  const elSelectedCount2 = document.getElementById("selectedCount2");
+  const elAssignCards = document.getElementById("assignCards");
+
+  const elTotalsTable = document.getElementById("totalsTable");
+  const elExtrasTable = document.getElementById("extrasTable");
+  const elPreviewBox = document.getElementById("previewBox");
+  const elPrintArea = document.getElementById("printArea");
+
+  const elModeLesson = document.getElementById("modeLesson");
+  const elModeBooth = document.getElementById("modeBooth");
+
+  const tabAssign = document.getElementById("tabAssign");
+  const tabTotals = document.getElementById("tabTotals");
+  const tabPreview = document.getElementById("tabPreview");
+  const panelAssign = document.getElementById("panelAssign");
+  const panelTotals = document.getElementById("panelTotals");
+  const panelPreview = document.getElementById("panelPreview");
+
+  const modeLabelAssign = document.getElementById("modeLabelAssign");
+  const modeHelpAssign = document.getElementById("modeHelpAssign");
+  const modeHelpTotals = document.getElementById("modeHelpTotals");
+  const elInfoTitle = document.getElementById("infoTitle");
+  const elInfoContent = document.getElementById("infoContent");
+
+  function renderInfoNote(){
+    if(state.mode === "lesson"){
+      elInfoTitle.textContent = "⚠️ 수업 운영 참고 사항";
+      elInfoContent.textContent = LESSON_INFO_NOTE;
+    }else{
+      elInfoTitle.textContent = "⚠️ 부스 운영 참고사항";
+      elInfoContent.textContent = BOOTH_INFO_NOTE;
+    }
+  }
+
+  function setMode(mode){
+    state.mode = mode === "booth" ? "booth" : "lesson";
+    saveState();
+    updateModeButtons();
+    render();
+  }
+
+  function updateModeButtons(){
+    elModeLesson.classList.toggle("active", state.mode === "lesson");
+    elModeBooth.classList.toggle("active", state.mode === "booth");
+    modeLabelAssign.textContent = getModeLabel(state.mode);
+
+    if(state.mode === "lesson"){
+      modeHelpAssign.textContent = "노트북/태블릿/스마트폰/인원은 한 줄, 메모는 아래에 입력합니다.";
+      modeHelpTotals.textContent = "노트북/태블릿/스마트폰은 항상 표시됩니다. (여분도 여기서 입력 가능)";
+    }else{
+      modeHelpAssign.textContent = "부스용 목록 기준으로 별도 배정됩니다.";
+      modeHelpTotals.textContent = "부스용 총합이 별도로 계산됩니다.";
+    }
+  }
+
+  elModeLesson.onclick = ()=>setMode("lesson");
+  elModeBooth.onclick = ()=>setMode("booth");
+
+  function setTab(which){
+    const all = [
+      {tab:tabAssign, panel:panelAssign, key:"assign"},
+      {tab:tabTotals, panel:panelTotals, key:"totals"},
+      {tab:tabPreview, panel:panelPreview, key:"preview"},
+    ];
+    for(const t of all){
+      const on = t.key === which;
+      t.tab.setAttribute("aria-selected", on ? "true":"false");
+      t.panel.style.display = on ? "" : "none";
+    }
+    render();
+  }
+
+  tabAssign.onclick = ()=>setTab("assign");
+  tabTotals.onclick = ()=>setTab("totals");
+  tabPreview.onclick = ()=>setTab("preview");
+
+  function bindMeta(){
+    const current = getCurrentData();
+
+    elSchool.value = current.meta.school || "";
+    elSession.value = current.meta.session || "";
+    elDate.value = current.meta.date || "";
+    elPeople.value = Number(current.meta.people||0);
+
+    elSchool.oninput = ()=>{
+      getCurrentData().meta.school = elSchool.value;
+      saveState();
+      renderPreviewOnly();
+    };
+    elSession.oninput = ()=>{
+      getCurrentData().meta.session = elSession.value;
+      saveState();
+      renderPreviewOnly();
+    };
+    elDate.oninput = ()=>{
+      getCurrentData().meta.date = elDate.value;
+      saveState();
+      renderPreviewOnly();
+    };
+    elPeople.oninput = ()=>{
+      getCurrentData().meta.people = clampInt(elPeople.value);
+      saveState();
+      renderPreviewOnly();
+    };
+  }
+
+  function getFilteredPrograms(){
+    const q = (elSearch.value||"").trim().toLowerCase();
+    const programs = getCurrentPrograms();
+    if(!q) return programs;
+    return programs.filter(p=>p.name.toLowerCase().includes(q));
+  }
+
+  function renderProgramList(){
+    const current = getCurrentData();
+    const list = getFilteredPrograms();
+    const programs = getCurrentPrograms();
+
+    elPickedCount.textContent = String(current.selected.length);
+
+    if(programs.length === 0){
+      elProgramList.innerHTML = `<div class="emptyBox">부스용 프로그램 목록이 아직 비어 있어요.</div>`;
+      return;
+    }
+
+    elProgramList.innerHTML = list.map(p=>{
+      const checked = current.selected.includes(p.id);
+      return `
+        <label class="item">
+          <input type="checkbox" data-pick="${escapeHtml(p.id)}" ${checked ? "checked":""} />
+          <strong>${escapeHtml(p.name)}</strong>
+        </label>
+      `;
+    }).join("");
+
+    elProgramList.querySelectorAll('input[data-pick]').forEach(chk=>{
+      chk.addEventListener("change", ()=>{
+        const currentData = getCurrentData();
+        const id = chk.getAttribute("data-pick");
+        const on = chk.checked;
+
+        if(on && !currentData.selected.includes(id)){
+          currentData.selected.push(id);
+
+          const p = getCurrentPrograms().find(x=>x.id===id);
+          const people = clampInt(currentData.meta.people);
+          const d = makeDefaultProgramData(state.mode, p, people);
+
+          currentData.programData[id] = {
+            ...currentData.programData[id],
+            ...d,
+            notes: (currentData.programData[id] && currentData.programData[id].notes && currentData.programData[id].notes.trim())
+              ? currentData.programData[id].notes
+              : d.notes
+          };
+        }
+
+        if(!on && currentData.selected.includes(id)){
+          currentData.selected = currentData.selected.filter(x=>x!==id);
+        }
+
+        saveState();
+        render();
+      });
+    });
+  }
+
+  function renderAssign(){
+    const current = getCurrentData();
+    const selected = current.selected
+      .map(id=>getCurrentPrograms().find(p=>p.id===id))
+      .filter(Boolean);
+
+    elSelectedCount2.textContent = String(selected.length);
+
+    if(getCurrentPrograms().length === 0){
+      elAssignCards.innerHTML = `<div class="emptyBox">부스용 프로그램 목록을 넣으면 여기에 같은 화면으로 표시돼요.</div>`;
+      return;
+    }
+
+    if(selected.length===0){
+      elAssignCards.innerHTML = `<div class="help">왼쪽에서 프로그램을 선택하면 이곳에 카드가 생성됩니다.</div>`;
+      return;
+    }
+
+    elAssignCards.innerHTML = selected.map(p=>{
+      const d = current.programData[p.id];
+      return `
+        <div class="card">
+          <div class="cardTitle">
+            <h3 title="${escapeHtml(p.name)}">${escapeHtml(p.name)}</h3>
+
+            <div class="programTags">
+              ${(p.tags||[]).map(tag=>{
+                if(tag==="진로") return `<span class="programTag tag-career">진로</span>`;
+                if(tag==="교과") return `<span class="programTag tag-subject">교과</span>`;
+                if(tag==="지속가능") return `<span class="programTag tag-sustain">지속가능</span>`;
+                if(tag==="초등") return `<span class="programTag tag-elementary">초등</span>`;
+                if(tag==="캠프") return `<span class="programTag tag-camp">캠프</span>`;
+                if(tag==="부스") return `<span class="programTag tag-booth">부스</span>`;
+                if(tag==="민주시민") return `<span class="programTag tag-civic">민주시민</span>`;
+                return "";
+              }).join("")}
+            </div>
+          </div>
+
+          <div class="rowInputs">
+            <div class="inField">
+              <span>노트북</span>
+              <input type="number" min="0" step="1" data-laptop="${escapeHtml(p.id)}" value="${Number(d.laptop||0)}">
+            </div>
+            <div class="inField">
+              <span>태블릿</span>
+              <input type="number" min="0" step="1" data-tablet="${escapeHtml(p.id)}" value="${Number(d.tablet||0)}">
+            </div>
+            <div class="inField">
+              <span>스마트폰</span>
+              <input type="number" min="0" step="1" data-phone="${escapeHtml(p.id)}" value="${Number(d.smartphone||0)}">
+            </div>
+            <div class="inField">
+              <span>인원</span>
+              <input type="number" min="0" step="1" data-students="${escapeHtml(p.id)}" value="${Number(d.students||0)}">
+            </div>
+          </div>
+
+          <div class="help" style="margin-top:8px; margin-bottom:6px;">메모(학교 기기 사용, 기타사항)</div>
+          <textarea data-notes="${escapeHtml(p.id)}">${escapeHtml(d.notes || "")}</textarea>
+        </div>
+      `;
+    }).join("");
+
+    elAssignCards.querySelectorAll('input[data-laptop]').forEach(inp=>{
+      inp.addEventListener("input", ()=>{
+        const currentData = getCurrentData();
+        const id = inp.getAttribute("data-laptop");
+        currentData.programData[id].laptop = clampInt(inp.value);
+        if(Object.prototype.hasOwnProperty.call(currentData.totalsOverrides,"노트북")) delete currentData.totalsOverrides["노트북"];
+        saveState();
+        renderTotals();
+        renderPreviewOnly();
+      });
+    });
+
+    elAssignCards.querySelectorAll('input[data-tablet]').forEach(inp=>{
+      inp.addEventListener("input", ()=>{
+        const currentData = getCurrentData();
+        const id = inp.getAttribute("data-tablet");
+        currentData.programData[id].tablet = clampInt(inp.value);
+        if(Object.prototype.hasOwnProperty.call(currentData.totalsOverrides,"태블릿")) delete currentData.totalsOverrides["태블릿"];
+        saveState();
+        renderTotals();
+        renderPreviewOnly();
+      });
+    });
+
+    elAssignCards.querySelectorAll('input[data-phone]').forEach(inp=>{
+      inp.addEventListener("input", ()=>{
+        const currentData = getCurrentData();
+        const id = inp.getAttribute("data-phone");
+        currentData.programData[id].smartphone = clampInt(inp.value);
+        if(Object.prototype.hasOwnProperty.call(currentData.totalsOverrides,"스마트폰")) delete currentData.totalsOverrides["스마트폰"];
+        saveState();
+        renderTotals();
+        renderPreviewOnly();
+      });
+    });
+
+    elAssignCards.querySelectorAll('input[data-students]').forEach(inp=>{
+      inp.addEventListener("input", ()=>{
+        const currentData = getCurrentData();
+        const id = inp.getAttribute("data-students");
+        const v = clampInt(inp.value);
+        currentData.programData[id].students = v;
+
+        const program = getCurrentPrograms().find(x=>x.id===id);
+        const auto = getAutoDeviceDefaults(state.mode, program.name, v);
+
+        currentData.programData[id].laptop = auto.laptop;
+        currentData.programData[id].tablet = auto.tablet;
+        currentData.programData[id].smartphone = auto.smartphone;
+
+        if(Object.prototype.hasOwnProperty.call(currentData.totalsOverrides,"노트북")) delete currentData.totalsOverrides["노트북"];
+        if(Object.prototype.hasOwnProperty.call(currentData.totalsOverrides,"태블릿")) delete currentData.totalsOverrides["태블릿"];
+        if(Object.prototype.hasOwnProperty.call(currentData.totalsOverrides,"스마트폰")) delete currentData.totalsOverrides["스마트폰"];
+
+        saveState();
+        renderAssign();
+        renderTotals();
+        renderPreviewOnly();
+      });
+    });
+
+    elAssignCards.querySelectorAll('textarea[data-notes]').forEach(ta=>{
+      ta.addEventListener("input", ()=>{
+        const currentData = getCurrentData();
+        const id = ta.getAttribute("data-notes");
+        currentData.programData[id].notes = ta.value;
+        saveState();
+        renderPreviewOnly();
+      });
+    });
+  }
+
+  function calcBaseDeviceSums(){
+    const current = getCurrentData();
+    const base = { laptop:0, tablet:0, smartphone:0 };
+    for(const id of current.selected){
+      const d = current.programData[id];
+      if(!d) continue;
+      base.laptop += Number(d.laptop||0);
+      base.tablet += Number(d.tablet||0);
+      base.smartphone += Number(d.smartphone||0);
+    }
+    return base;
+  }
+
+  function calcTotals(){
+    const current = getCurrentData();
+    const totals = { "노트북":0, "태블릿":0, "스마트폰":0 };
+
+    const base = calcBaseDeviceSums();
+    totals["노트북"] = base.laptop;
+    totals["태블릿"] = base.tablet;
+    totals["스마트폰"] = base.smartphone;
+
+    const ed = current.extrasDevices || { laptop:0, tablet:0, smartphone:0 };
+    totals["노트북"] += Number(ed.laptop||0);
+    totals["태블릿"] += Number(ed.tablet||0);
+    totals["스마트폰"] += Number(ed.smartphone||0);
+
+    for(const [k,v] of Object.entries(current.totalsOverrides||{})){
+      totals[k] = Number(v||0);
+    }
+
+    return totals;
+  }
+
+  function renderTotals(){
+    const current = getCurrentData();
+    const totals = calcTotals();
+    const ALWAYS_SHOW = ["노트북","태블릿","스마트폰"];
+
+    const keys = Object.keys(totals)
+      .filter(k => ALWAYS_SHOW.includes(k) || Number(totals[k]) > 0 || Object.prototype.hasOwnProperty.call(current.totalsOverrides||{}, k))
+      .sort((a,b)=>a.localeCompare(b,"ko"));
+
+    if(keys.length === 0){
+      elTotalsTable.innerHTML = `<tr><td colspan="3" style="color:var(--muted); font-weight:800;">아직 입력된 수량이 없어요. (0은 표시되지 않습니다)</td></tr>`;
+    }else{
+      elTotalsTable.innerHTML = keys.map(k=>{
+        const isDevice = ALWAYS_SHOW.includes(k);
+        const isManual = Object.prototype.hasOwnProperty.call(current.totalsOverrides||{}, k);
+
+        return `
+          <tr>
+            <td>${escapeHtml(k)}</td>
+            <td>
+              <input type="number" min="0" step="1" data-total="${escapeHtml(k)}" value="${Number(totals[k]||0)}">
+            </td>
+            <td>
+              ${isManual
+                ? `<strong style="color:#b00020">수동</strong> <button class="btn no-print" style="padding:6px 8px; margin-left:6px;" data-reset="${escapeHtml(k)}">↺</button>`
+                : isDevice
+                  ? `<span style="color:var(--muted); font-weight:900;">자동+여분</span>`
+                  : `<span style="color:var(--muted); font-weight:900;">자동</span>`
+              }
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    elTotalsTable.querySelectorAll('input[data-total]').forEach(inp=>{
+      inp.addEventListener("input", ()=>{
+        const currentData = getCurrentData();
+        const key = inp.getAttribute("data-total");
+        const v = clampInt(inp.value);
+
+        if(key === "노트북" || key === "태블릿" || key === "스마트폰"){
+          const base = calcBaseDeviceSums();
+          const extraVal =
+            key === "노트북" ? Math.max(0, v - base.laptop) :
+            key === "태블릿" ? Math.max(0, v - base.tablet) :
+                               Math.max(0, v - base.smartphone);
+
+          if(!currentData.extrasDevices) currentData.extrasDevices = { laptop:0, tablet:0, smartphone:0 };
+          if(key === "노트북") currentData.extrasDevices.laptop = extraVal;
+          if(key === "태블릿") currentData.extrasDevices.tablet = extraVal;
+          if(key === "스마트폰") currentData.extrasDevices.smartphone = extraVal;
+
+          if(Object.prototype.hasOwnProperty.call(currentData.totalsOverrides, key)) delete currentData.totalsOverrides[key];
+
+          saveState();
+          renderTotals();
+          renderPreviewOnly();
+          return;
+        }
+
+        if(v === 0) delete currentData.totalsOverrides[key];
+        else currentData.totalsOverrides[key] = v;
+
+        saveState();
+        renderTotals();
+        renderPreviewOnly();
+      });
+    });
+
+    elTotalsTable.querySelectorAll('button[data-reset]').forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const currentData = getCurrentData();
+        const key = btn.getAttribute("data-reset");
+        delete currentData.totalsOverrides[key];
+        saveState();
+        renderTotals();
+        renderPreviewOnly();
+      });
+    });
+
+    elExtrasTable.innerHTML = current.extras.map((ex, idx)=>`
+      <tr>
+        <td><input type="text" data-ex-item="${idx}" value="${escapeHtml(ex.item||"")}" style="width:100%;"></td>
+        <td><input type="number" min="0" step="1" data-ex-qty="${idx}" value="${Number(ex.qty||0)}"></td>
+        <td class="no-print"><button class="btn" data-ex-del="${idx}">삭제</button></td>
+      </tr>
+    `).join("");
+
+    elExtrasTable.querySelectorAll('input[data-ex-item]').forEach(inp=>{
+      inp.addEventListener("input", ()=>{
+        const currentData = getCurrentData();
+        const i = Number(inp.getAttribute("data-ex-item"));
+        currentData.extras[i].item = inp.value;
+        saveState();
+        renderPreviewOnly();
+        buildPrintArea();
+      });
+    });
+
+    elExtrasTable.querySelectorAll('input[data-ex-qty]').forEach(inp=>{
+      inp.addEventListener("input", ()=>{
+        const currentData = getCurrentData();
+        const i = Number(inp.getAttribute("data-ex-qty"));
+        currentData.extras[i].qty = clampInt(inp.value);
+        saveState();
+        renderPreviewOnly();
+        buildPrintArea();
+      });
+    });
+
+    elExtrasTable.querySelectorAll('button[data-ex-del]').forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const currentData = getCurrentData();
+        const i = Number(btn.getAttribute("data-ex-del"));
+        currentData.extras.splice(i,1);
+        saveState();
+        renderTotals();
+        renderPreviewOnly();
+        buildPrintArea();
+      });
+    });
+
+    buildPrintArea();
+  }
+
+  function buildProgramText(id){
+    const current = getCurrentData();
+    const p = getCurrentPrograms().find(x=>x.id===id);
+    const d = current.programData[id];
+    if(!p || !d) return null;
+
+    const lines = [];
+    if(Number(d.laptop||0) > 0) lines.push(`- 노트북 ${Number(d.laptop)}`);
+    if(Number(d.tablet||0) > 0) lines.push(`- 태블릿 ${Number(d.tablet)}`);
+    if(Number(d.smartphone||0) > 0) lines.push(`- 스마트폰 ${Number(d.smartphone)}`);
+
+    const memo = (d.notes||"").trim();
+    if(memo) lines.push(memo);
+
+    return {
+      title: `${p.name} (${Number(d.students||0)})`,
+      content: lines.join("\n")
+    };
+  }
+
+  function buildKakaoText(){
+    const current = getCurrentData();
+    const meta = current.meta;
+    const date = (meta.date || "").trim();
+    const school = (meta.school || "").trim();
+    const session = (meta.session || "").trim();
+    const people = Number(meta.people || 0);
+
+    const headerParts = [];
+    if(date) headerParts.push(date);
+    if(school) headerParts.push(school);
+    if(session) headerParts.push(session);
+
+    const header = `◆ ${headerParts.join(" ")}${people > 0 ? ` (${people}명)` : ""}`.trim();
+
+    const blocks = [];
+
+    for(const id of current.selected){
+      const programBlock = buildProgramText(id);
+      if(!programBlock) continue;
+
+      let text = `✔ ${programBlock.title}\n`;
+      if(programBlock.content) text += `${programBlock.content}\n`;
+      blocks.push(text.trim());
+    }
+
+    const totals = calcTotals();
+    const totalParts = [];
+    if(Number(totals["노트북"]||0) > 0) totalParts.push(`노트북 ${Number(totals["노트북"])}`);
+    if(Number(totals["스마트폰"]||0) > 0) totalParts.push(`스마트폰 ${Number(totals["스마트폰"])}`);
+    if(Number(totals["태블릿"]||0) > 0) totalParts.push(`태블릿 ${Number(totals["태블릿"])}`);
+
+    if(totalParts.length){
+      blocks.push(`💻 전자기기 총합\n${totalParts.join(" / ")}`);
+    }
+
+    const extras = current.extras
+      .map(ex => {
+        const item = (ex.item||"").trim();
+        const qty = Number(ex.qty||0);
+        if(!item || qty <= 0) return null;
+        return `- ${item} ${qty}`;
+      })
+      .filter(Boolean)
+      .join("\n");
+
+    if(extras){
+      blocks.push(`💡추가\n${extras}`);
+    }
+
+    return `${header}\n${blocks.join("\n\n")}`.trim();
+  }
+
+  function renderPreviewOnly(){
+    elPreviewBox.textContent = buildKakaoText();
+    buildPrintArea();
+  }
+
+  function buildPrintArea(){
+    const current = getCurrentData();
+    const meta = current.meta;
+    const school = (meta.school||"").trim() || "-";
+    const session = (meta.session||"").trim() || "-";
+    const date = (meta.date||"").trim() || "-";
+    const people = Number(meta.people||0);
+    const selectedProgramCount = current.selected.length;
+
+    const programBlocks = current.selected
+      .map(id => buildProgramText(id))
+      .filter(Boolean)
+      .map(block => `
+        <div class="printProgram">
+          <div class="printProgramTitle">✔ ${escapeHtml(block.title)}</div>
+          <div class="printProgramContent">${escapeHtml(block.content)}</div>
+        </div>
+      `)
+      .join("");
+
+    const totals = calcTotals();
+    const totalParts = [];
+    if(Number(totals["노트북"]||0) > 0) totalParts.push(`노트북 ${Number(totals["노트북"])}`);
+    if(Number(totals["스마트폰"]||0) > 0) totalParts.push(`스마트폰 ${Number(totals["스마트폰"])}`);
+    if(Number(totals["태블릿"]||0) > 0) totalParts.push(`태블릿 ${Number(totals["태블릿"])}`);
+
+    const extras = current.extras
+      .map(ex => {
+        const item = (ex.item||"").trim();
+        const qty = Number(ex.qty||0);
+        if(!item || qty <= 0) return null;
+        return `- ${item} ${qty}`;
+      })
+      .filter(Boolean)
+      .join("\n");
+
+    elPrintArea.innerHTML = `
+      <div class="printSheet">
+        <div class="printHead">
+          <div class="printHeadTitle">${getModeLabel(state.mode)} 교구 점검표</div>
+          <div class="printMeta">
+            <div>날짜: ${escapeHtml(date)}</div>
+            <div>학교명: ${escapeHtml(school)}</div>
+            <div>차시: ${escapeHtml(session)}</div>
+            <div>인원: ${people}명</div>
+            <div>선택 프로그램: ${selectedProgramCount}개</div>
+          </div>
+        </div>
+
+        ${programBlocks}
+
+        ${totalParts.length ? `
+          <div class="printSummary">
+            <div class="printSummaryTitle">💻 총합 기기</div>
+            <div class="printSummaryLine">${escapeHtml(totalParts.join(" / "))}</div>
+          </div>
+        ` : ""}
+
+        ${extras ? `
+          <div class="printSummary">
+            <div class="printSummaryTitle">💡추가</div>
+            <div class="printExtraBlock">${escapeHtml(extras)}</div>
+          </div>
+        ` : ""}
+      </div>
+    `;
+  }
+
+  function render(){
+    bindMeta();
+    updateModeButtons();
+    renderProgramList();
+    renderAssign();
+    renderTotals();
+    renderPreviewOnly();
+    renderInfoNote();
+    elPickedCount.textContent = String(getCurrentData().selected.length);
+  }
+
+  elSearch.addEventListener("input", renderProgramList);
+
+  document.getElementById("btnAll").onclick = ()=>{
+    const current = getCurrentData();
+    const programs = getCurrentPrograms();
+
+    current.selected = programs.map(p=>p.id);
+
+    const people = clampInt(current.meta.people);
+    for(const p of programs){
+      const d = makeDefaultProgramData(state.mode, p, people);
+      current.programData[p.id] = {
+        ...current.programData[p.id],
+        ...d,
+        notes: (current.programData[p.id] && current.programData[p.id].notes && current.programData[p.id].notes.trim())
+          ? current.programData[p.id].notes
+          : d.notes
+      };
+    }
+
+    saveState();
+    render();
+  };
+
+  document.getElementById("btnNone").onclick = ()=>{
+    const current = getCurrentData();
+    current.selected = [];
+    saveState();
+    render();
+  };
+
+  document.getElementById("btnAddExtra").onclick = ()=>{
+    const current = getCurrentData();
+    current.extras.push({ item:"", qty:0 });
+    saveState();
+    renderTotals();
+    renderPreviewOnly();
+  };
+
+  document.getElementById("btnCopy").onclick = async ()=>{
+    const text = buildKakaoText();
+    try{
+      await navigator.clipboard.writeText(text);
+      alert("톡용 문구가 복사됐어요");
+    }catch{
+      prompt("복사가 막혔어요. 아래 문구를 복사하세요", text);
+    }
+  };
+
+  document.getElementById("btnPrint").onclick = ()=>{
+    buildPrintArea();
+    window.print();
+  };
+
+  document.getElementById("btnReset").onclick = ()=>{
+    if(!confirm(`정말 ${getModeLabel(state.mode)} 데이터만 초기화할까요?`)) return;
+    state[state.mode] = buildModeData(state.mode);
+    saveState();
+    render();
+  };
+
+  render();
+</script>
+</body>
+</html>
