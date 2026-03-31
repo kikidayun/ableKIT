@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>😶 에이블 교구</title>
+  <title>교구 점검표 (2026)</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -231,6 +231,13 @@
       align-items:center;
       justify-content:center;
       transition:all .15s ease;
+      text-decoration:none;
+      color:var(--text);
+    }
+
+    .btn.printQuick,
+    .btn.printQuick:hover{
+      text-decoration:none;
     }
 
     .btn:hover{
@@ -351,11 +358,8 @@
       gap:10px;
       flex-wrap:wrap;
       margin-bottom:10px;
-      position: sticky;
-      top: 0;
       background: var(--card);
       padding: 6px 0 10px;
-      z-index: 3;
       border-bottom: 1px solid var(--line);
     }
 
@@ -370,15 +374,148 @@
       padding:12px;
       background:#fff;
       margin-bottom:12px;
+      position: relative;
+      overflow: visible;
     }
+
 
     .cardTitle{
       display:flex;
-      align-items:center;
-      justify-content:flex-start;
-      gap:8px;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
       flex-wrap:wrap;
       margin-bottom:10px;
+    }
+
+    .cardTitleMain{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+      min-width:0;
+      flex:1 1 auto;
+    }
+
+    .cardTitleActions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-left:auto;
+      position:relative;
+    }
+
+    .printInlineDesc{
+      margin-left:6px;
+      font-size:12px;
+      color:#9ca3af; /* 연한 회색 */
+      font-weight:500;
+    }
+
+    .btn.printQuick{
+      min-height:36px;
+      padding:0 12px;
+      border-radius:10px;
+      font-size:12px;
+      font-weight:800;
+      background:#eff6ff;
+      color:#2563eb;
+      border:1px solid #cfe0ff;
+    }
+
+    .btn.printQuick:hover{
+      background:#e8f0ff;
+      border-color:#bfd1ff;
+    }
+
+    .printMenu{
+      position:absolute;
+      top:calc(100% + 6px);
+      right:0;
+      bottom:auto;
+      min-width:360px;
+      padding:8px;
+      border:1px solid var(--line);
+      border-radius:12px;
+      background:#ffffff;
+      box-shadow:0 10px 24px rgba(17,24,39,.10);
+      display:none;
+      z-index:10;
+    }
+
+    .printMenu.open{
+      display:block;
+    }
+
+    .printMenuItem{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:8px;
+      border-radius:10px;
+    }
+
+    .printMenuItem:hover{
+      background:#f8faff;
+    }
+
+    .printMenuItem + .printMenuItem{
+      margin-top:4px;
+    }
+
+    .printMenuLabel{
+      font-size:14px;
+      font-weight:700;
+      color:#374151;
+      line-height:1.35;
+    }
+
+    .printMenuBtns{
+      display:flex;
+      gap:6px;
+      flex:0 0 auto;
+    }
+
+    .printMiniBtn{
+      min-height:32px;
+      padding:0 10px;
+      border-radius:9px;
+      font-size:12px;
+      font-weight:800;
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--text);
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+    }
+
+    .printMiniBtn:hover{
+      background:#f8faff;
+      border-color:#cfd8ea;
+    }
+
+    .printMiniBtn.primary{
+      background:var(--primary);
+      color:#fff;
+      border-color:var(--primary);
+    }
+
+    @media (max-width: 980px){
+      .cardTitleActions{
+        width:100%;
+        margin-left:0;
+        justify-content:flex-start;
+      }
+
+      .printMenu{
+        left:0;
+        right:auto;
+      }
     }
 
     .cardTitle h3{
@@ -424,6 +561,31 @@
       max-width:72px;
       padding:6px 6px;
       text-align:center;
+    }
+
+    .programTag{
+      position:relative;
+      cursor:pointer;
+    }
+
+    .tagTooltip{
+      position:absolute;
+      bottom:120%;
+      left:50%;
+      transform:translateX(-50%);
+      background:#111827;
+      color:#fff;
+      padding:6px 10px;
+      border-radius:8px;
+      font-size:12px;
+      white-space:nowrap;
+      display:none;
+      z-index:50;
+      pointer-events:none;
+    }
+
+    .programTag:hover .tagTooltip{
+      display:block;
     }
 
     table{
@@ -772,7 +934,7 @@
       <h2>프로그램 선택</h2>
 
       <div class="filterRow">
-        <input id="search" type="text" placeholder="프로그램 검색" style="width:100%;" />
+        <input id="search" type="text" placeholder="프로그램명, 태그, 메모 검색" style="width:100%;" />
       </div>
       <div class="filterRow">
         <button class="btn" id="btnAll">전체선택</button>
@@ -858,58 +1020,240 @@
 `.trim();
 
   const BOOTH_INFO_NOTE = `
-🔸부스 전용 현수막과 부착을 위한 테이프, 가위 지참
+🔸부스 전용 배너(배너대), 현수막, 현수막 부착을 위한 테이프, 가위 지참
 `.trim();
 
   const LESSON_PROGRAM_MASTER = [
-    { id:"p01", name:"신소재(메타물질)", tags:["진로","교과"], notes:"신소재 키트(나무판, 풍량 측정기, 칼·가위, 테이프, 글루건, 색종이, 수수깡 10봉지), 우드락판, 선풍기, 멀티탭, 보조배터리, AAA건전지\n🔎 소모품: 색종이, 수수깡, 글루건심, AAA건전지" },
-    { id:"p02", name:"반도체", tags:["진로","교과"], notes:"반도체 키트(브레드보드 세트, 배터리케이스, 수수케이블 13개), AA건전지, 여분(수수케이블, 배터리케이스, 소자 부품)\n회로 설계: 태블릿" },
-    { id:"p03", name:"의공학", tags:["진로","교과"], notes:"의공학 키트(거짓말 탐지기, GSR, 심전도), 노트북, 충전기·마우스, 멀티탭, AA건전지\n🔎 소모품: 심전도 패치, 암수케이블, AA건전지\n* 중등: 메이키메이키 키트(보드, 메이키보드 케이블, 악어클립, 호일, 알루미늄 테이프)" },
-    { id:"p04", name:"스마트 팩토리", tags:["진로","지속가능"], notes:"스마트팜용 유킷, 기물, 스마트폰" },
-    { id:"p05", name:"신재생 에너지", tags:["진로","지속가능"], notes:"신재생 키트(레고브릭, 절연테이프, 색테이프, 네임펜, 글루건), 할로겐등, 태양광판+USB선풍기, 바퀴, 멀티탭\n* 창작: 똑상2 키트(글루건, 싸인펜·색연필, 매직, 수수깡 10봉지, 칼·가위, 테이프, 30cm 자), 멀티탭, 폼보드" },
-    { id:"p06", name:"제약 연구", tags:["진로","교과"], notes:"제약카드 10세트, 전자기기(태블릿·스마트폰)" },
-    { id:"p07", name:"머신러닝", tags:["진로","교과","지속가능"], notes:"노트북, 충전기·마우스, 멀티탭, 포스트잇\n* 컴퓨터실: 웹캠, 포스트잇\n* 초등: 태블릿" },
+    { id:"p01", name:"신소재(메타물질)", tags:["진로","교과"], 
+        nameMap: {
+        "교과": "화학-신소재"
+        },
+        notes:"신소재 키트(나무판, 풍량 측정기, 칼·가위, 테이프, 글루건, 색종이, 수수깡 10봉지), 우드락판, 선풍기, 멀티탭, 보조배터리, AAA건전지\n🔎 소모품: 색종이, 수수깡, 글루건심, AAA건전지",
+        printFiles:[
+        { label:"결과보고서", desc:"(4인 1조)", pdf:"./files/metamaterial.pdf", hwp:"./files/metamaterial.hwp" },
+      ]
+     },
+    { id:"p02", name:"반도체", tags:["진로","교과"],
+        nameMap: {
+        "교과": "물리-반도체"
+        },
+        notes:"반도체 키트(브레드보드 세트, 배터리케이스, 수수케이블 13개), AA건전지, 여분(수수케이블, 배터리케이스, 소자 부품)\n회로 설계: 태블릿" },
+    { id:"p03", name:"의공학", tags:["진로","교과"], 
+        nameMap: {
+        "교과": "생명-의공학"
+        },
+        notes:"의공학 키트(거짓말 탐지기, GSR, 심전도), 노트북, 충전기·마우스, 멀티탭, AA건전지\n🔎 소모품: 심전도 패치, 암수케이블, AA건전지\n* 중등: 메이키메이키 키트(보드, 메이키보드 케이블, 악어클립, 호일, 알루미늄 테이프)" },
+    { id:"p04", name:"스마트 팩토리", tags:["진로","지속가능"], 
+        nameMap: {
+        "지속가능": "스마트 농업 메이커스"
+        },
+        notes:"스마트팜용 유킷, 기물, 스마트폰" },
+    { id:"p05", name:"신재생 에너지", tags:["진로","지속가능"], 
+        nameMap: {
+        "지속가능": "탄소중립 에너지 챌린지"
+        },
+        notes:"신재생 키트(레고브릭, 절연테이프, 색테이프, 네임펜, 글루건), 할로겐등, 태양광판+USB선풍기, 바퀴, 멀티탭\n* 창작: 똑상2 키트(글루건, 싸인펜·색연필, 매직, 수수깡 10봉지, 칼·가위, 테이프, 30cm 자), 멀티탭, 폼보드" },
+    { id:"p06", name:"제약 연구", tags:["진로","교과"], 
+        nameMap: {
+        "교과": "화학-제약"
+        },
+        notes:"제약카드 10세트, 전자기기(태블릿·스마트폰)" },
+    { id:"p07", name:"머신러닝", tags:["진로","교과","지속가능"], 
+        nameMap: {
+        "교과": "수학-머신러닝",
+        "지속가능": "머신러닝으로 그려보는 지속가능한 미래"
+        },
+        notes:"노트북, 충전기·마우스, 멀티탭, 포스트잇\n* 컴퓨터실: 웹캠, 포스트잇\n* 초등: 태블릿" },
     { id:"p08", name:"AI 운동·게임", tags:["진로","초등"], notes:"태블릿" },
-    { id:"p09", name:"인공지능 딥러닝", tags:["진로","교과"], notes:"태블릿" },
-    { id:"p10", name:"똑똑한 상상이룸", tags:["캠프"], notes:"노트북, 충전기·마우스, 멀티탭, 폼보드, 똑상1 키트(아두이노, LED, 서보모터, 아두이노 케이블, 점퍼 케이블)\n똑상2 키트(글루건, 싸인펜·색연필, 매직, 수수깡 10봉지, 칼·가위, 테이프, 30cm 자)\n🔎 소모품 : 폼보드, 수수깡" },
-    { id:"p11", name:"프롬프트 엔지니어", tags:["진로","교과","지속가능"], notes:"노트북, 충전기·마우스, 멀티탭, A4용지\n* 컴퓨터실: A4용지" },
+    { id:"p09", name:"인공지능 딥러닝", tags:["진로","교과"],
+        nameMap: {
+        "교과": "수학-딥러닝"
+        },
+        notes:"태블릿" },
+    { id:"p10", name:"똑똑한 상상이룸", tags:["캠프"], notes:"노트북, 충전기·마우스, 멀티탭, 폼보드, 똑상1 키트(아두이노, LED, 서보모터, 아두이노 케이블, 점퍼 케이블)\n똑상2 키트(글루건, 싸인펜·색연필, 매직, 수수깡 10봉지, 칼·가위, 테이프, 30cm 자)\n🔎 소모품 : 폼보드, 수수깡",
+        printFiles:[
+        { label:"계획서", desc:"(2인 1조)",  pdf:"./files/smart imagination.pdf", hwp:"./files/smart imagination.hwp" },
+      ]
+     },
+    { id:"p11", name:"프롬프트 엔지니어", tags:["진로","교과","지속가능"], 
+        nameMap: {
+        "교과": "국어-생성형 AI",
+        "지속가능": "AI로 만드는 나만의 홈페이지",
+        },
+      notes:"노트북, 충전기·마우스, 멀티탭, A4용지\n* 컴퓨터실: A4용지" },
     { id:"p12", name:"디지털기기 활용", tags:["진로","초등"], notes:"-" },
-    { id:"p13", name:"디지털 리터러시", tags:["진로","민주시민"], notes:"유인물-카피라이터, 전자기기(태블릿·스마트폰)" },
+    { id:"p13", name:"디지털 리터러시", tags:["진로","민주시민"], 
+        nameMap: {
+        "민주시민": "미디어 정보 판단 챌린지"
+        },
+        notes:"유인물-카피라이터, 전자기기(태블릿·스마트폰)",
+      printFiles:[
+        { label:"헤드라인-초등", desc:"(4인 1조)", pdf:"./files/digital-literacy-elementary.pdf", hwp:"./files/digital-literacy-elementary.hwp" },
+        { label:"헤드라인-기본", desc:"(4인 1조)", pdf:"./files/digital-literacy-high.pdf", hwp:"./files/digital-literacy-high.hwp" },
+        { label:"민주시민 팩트체크", desc:"예비용 (4인 1조)", pdf:"./files/democratic-factcheck.pdf" }
+      ]
+    },
     { id:"p14", name:"빅데이터", tags:["진로","초등"], notes:"포스트잇, 전자기기(태블릿·스마트폰)" },
-    { id:"p15", name:"빅데이터 경제", tags:["진로", "민주시민"], notes:"빅경 키트(양세찬 게임 머리띠+주식 유인물, 보드마카)\n포스트잇, 볼펜" },
-    { id:"p16", name:"빅데이터 분석", tags:["진로","민주시민"], notes:"유인물, 전자기기(태블릿·스마트폰)" },
-    { id:"p17", name:"정보보안", tags:["진로","민주시민"], notes:"금고, 포스트잇, 전자기기(태블릿·스마트폰)\n⚠️ 확인: ZEP 비밀번호 확인 및 금고 간식 보상 세팅 必" },
-    { id:"p18", name:"RSA 암호", tags:["교과"], notes:"유인물-RSA 암호 제작, 전자기기(태블릿·스마트폰)" },
+    { id:"p15", name:"빅데이터 경제", tags:["진로", "민주시민"], 
+        nameMap: {
+        "민주시민": "데이터 기반 사회문제 탐구"
+        },
+        notes:"빅경 키트(양세찬 게임 머리띠+주식 유인물, 보드마카)\n포스트잇, 볼펜",
+      printFiles:[
+        { label:"주식 유인물", desc:"예비용 (4인 1조)", pdf:"./files/bigdata-stockgame-A.pdf", hwp:"./files/bigdata-stockgame-A.hwp" },
+      ]
+     },
+    { id:"p16", name:"빅데이터 분석", tags:["진로","민주시민"],
+        nameMap: {
+        "민주시민": "AI 빅데이터 의사결정"
+        },
+      notes:"유인물, 전자기기(태블릿·스마트폰)",
+      printFiles:[
+        { label:"상황별 추천서", desc:"(2인 1조)", pdf:"./files/bigdata-car-recommend.pdf", hwp:"./files/bigdata-car-recommend.hwp" },
+      ]
+     },
+    { id:"p17", name:"정보보안", tags:["진로","민주시민"], 
+        nameMap: {
+        "민주시민": "디지털 보안·시민권 체험"
+        },
+      notes:"금고, 포스트잇, 전자기기(태블릿·스마트폰)\n⚠️ 확인: ZEP 비밀번호 확인 및 금고 간식 보상 세팅 必" },
+    { id:"p18", name:"RSA 암호", tags:["교과"], 
+        nameMap: {
+        "교과": "수학-RSA 암호"
+        },
+      notes:"유인물-RSA 암호 제작, 전자기기(태블릿·스마트폰)" },
     { id:"p19", name:"메타버스", tags:["진로"], notes:"탈출용 머지큐브, 전자기기(태블릿·스마트폰)" },
-    { id:"p20", name:"VR", tags:["진로","교과","지속가능"], notes:"카드보드(갈색/파랑), 돌돌이 테이프, 리필용 테이프,\n전자기기(태블릿·스마트폰)\n⚠️ 확인: 카드보드 학급 파악" },
+    { id:"p20", name:"VR", tags:["진로","교과","지속가능"], 
+        nameMap: {
+        "교과": "수학-VR",
+        "지속가능": "VR로 그리는 지속가능한 미래도시"
+        },
+      notes:"카드보드(갈색/파랑), 돌돌이 테이프, 리필용 테이프,\n전자기기(태블릿·스마트폰)\n⚠️ 확인: 카드보드 학급 파악" },
     { id:"p21", name:"AR", tags:["진로"], notes:"머지큐브, 전자기기(태블릿·스마트폰)" },
     { id:"p22", name:"VR+홀로그램", tags:["진로","초등"], notes:"카드보드(갈색/파랑), 돌돌이 테이프, 홀로그램\n전자기기(태블릿·스마트폰)" },
-    { id:"p23", name:"콘텐츠 기획", tags:["진로","민주시민"], notes:"유인물-콘텐츠 기획" },
-    { id:"p24", name:"스토리 기획", tags:["진로"], notes:"딕싯, 유인물-스토리 기획" },
-    { id:"p25", name:"크리에이티브 광고 기획", tags:["진로"], notes:"과자, 크로마키, 유인물-광고 기획\n전자기기(태블릿·스마트폰)" },
-    { id:"p26", name:"미디어 광고 제작·더빙", tags:["진로","초등"], notes:"전자기기(태블릿·스마트폰)" },
+    { id:"p23", name:"콘텐츠 기획", tags:["진로"], notes:"유인물-콘텐츠 기획" ,
+      printFiles:[
+        { label:"콘텐츠 기획안", desc:"예비용 (2인 1조)", pdf:"./files/content-planning.pdf", hwp:"./files/content-planning.hwp" },
+      ]
+    },
+    { id:"p24", name:"스토리 기획", tags:["진로"], notes:"딕싯, 유인물-스토리 기획",
+      printFiles:[
+        { label:"딕싯 미니 실습", desc:"4-6인 1조", pdf:"./files/story-planning-mini.pdf", hwp:"./files/story-planning-mini.hwp" },
+        { label:"세계관 기획", desc:"개별", pdf:"./files/story-planning-world.pdf", hwp:"./files/story-planning-world.hwp" },
+      ]
+     },
+    { id:"p25", name:"크리에이티브 광고 기획", tags:["진로","민주시민"], 
+        nameMap: {
+        "민주시민": "공익 캠페인 기획 프로젝트"
+        },
+      notes:"과자, 크로마키, 유인물-광고 기획\n전자기기(태블릿·스마트폰)",
+      printFiles:[
+        { label:"과자 광고 기획안", desc:"(4인 1조)", pdf:"./files/creative-ad-planning.pdf", hwp:"./files/creative-ad-planning.hwp" },
+        { label:"민주시민 캠페인 기획안", desc:"(4인 1조)", pdf:"./files/democratic-campaign.pdf", hwp:"./files/democratic-campaign.hwp" },
+      ]
+     },
+    { id:"p26", name:"미디어 광고 더빙", tags:["진로","초등"], notes:"전자기기(태블릿·스마트폰)" },
     { id:"p27", name:"게임 기획", tags:["진로"], notes:"노트북, 충전기·마우스, 멀티탭" },
     { id:"p28", name:"게임 개발(엔트리)", tags:["진로","초등"], notes:"노트북, 충전기·마우스, 멀티탭\n* 초등 : 태블릿" },
-    { id:"p29", name:"앱 개발", tags:["진로","지속가능"], notes:"전자기기(태블릿·스마트폰)" },
+    { id:"p29", name:"앱 개발", tags:["진로","지속가능"], 
+        nameMap: {
+        "지속가능": "지구를 지키는 생활습관 앱 제작"
+        },
+      notes:"전자기기(태블릿·스마트폰)" },
     { id:"p30", name:"앱 디자인", tags:["진로"], notes:"전자기기(태블릿·스마트폰)" },
-    { id:"p31", name:"시뮬레이션", tags:["교과"], notes:"노트북, 충전기·마우스, 멀티탭" },
+    { id:"p31", name:"시뮬레이션", tags:["교과"], 
+        nameMap: {
+        "교과": "물리-시뮬레이션"
+        },
+      notes:"노트북, 충전기·마우스, 멀티탭" },
     { id:"p32", name:"메이커", tags:["진로"], notes:"네오봇 키트, 네오봇 통(2인 1조), 전자기기(태블릿·스마트폰)" },
-    { id:"p33", name:"로고 디자인", tags:["진로"], notes:"유인물-기업정보, 포토프린터, 카트리지, 멀티탭, 전자기기(태블릿·스마트폰)\n🔎 소모품: 카트리지(잉크, 용지)\n⚠️ 확인: 포토프린터용 스마트폰 배터리 확인" },
+    { id:"p33", name:"로고 디자인", tags:["진로"], notes:"유인물-기업정보, 포토프린터, 카트리지, 멀티탭, 전자기기(태블릿·스마트폰)\n🔎 소모품: 카트리지(잉크, 용지)\n⚠️ 확인: 포토프린터용 스마트폰 배터리 확인",
+      printFiles:[
+        { label:"기업별 유인물", desc:"예비용 (코팅)", pdf:"./files/logo-design.pdf", hwp:"./files/logo-design.hwp" },
+      ]
+     },
     { id:"p34", name:"애니메이터", tags:["진로"], notes:"전자기기(태블릿·스마트폰)" },
-    { id:"p35", name:"시각디자인(퀴버)", tags:["진로","초등"], notes:"퀴버 키트(유인물-도안, 색연필), 전자기기(태블릿·스마트폰)" },
+    { id:"p35", name:"시각디자인(퀴버)", tags:["진로","초등"], notes:"퀴버 키트(유인물-도안, 색연필), 전자기기(태블릿·스마트폰)" ,
+      printFiles:[
+        { label:"양(Murphy)", desc:"개별", pdf:"./files/quiver-murphy.pdf" },
+        { label:"펭귄(Penfold)", desc:"개별", pdf:"./files/quiver-Penfold.pdf" },
+        { label:"토끼(Ruby)", desc:"개별", pdf:"./files/quiver-Ruby.pdf" },
+      ]
+    },
     { id:"p36", name:"시각디자인(AI 캐릭터)", tags:["진로"], notes:"전자기기(태블릿·스마트폰)" },
-    { id:"p37", name:"인포메이션 디자인", tags:["진로","교과","지속가능","민주시민"], notes:"유인물-UI/UX 분석, 전자기기(태블릿·스마트폰)" },
-    { id:"p38", name:"3D설계 모델링", tags:["진로","지속가능"], notes:"3D 키트(3D펜, 어댑터·케이블, 필라멘트, 장갑, 가위, 도안), 멀티탭\n🔎 소모품: 필라멘트" },
-    { id:"p39", name:"3D설계 건축", tags:["교과"], notes:"3D 키트(펜, 어댑터·케이블, 필라멘트, 장갑, 가위, 도안), ⚠️진동기 (사용여부 확인),멀티탭" },
-    { id:"p40", name:"로봇", tags:["진로","교과"], notes:"유킷 or 지무, 유킷통, 배틀맵, 전자기기(태블릿·스마트폰)\n* 네오봇: 자율주행 키트와 동일" },
-    { id:"p41", name:"디지털 헬스", tags:["진로","지속가능"], notes:"측정 키트 8세트 구성(악력기, 산소포화도, 혈압, 민첩성, 자), AAA건전지, 유인물-디지털헬스" },
-    { id:"p42", name:"자율주행", tags:["진로","지속가능"], notes:"네오봇, 네오봇통(4인 1조), 주행맵, 전자기기(태블릿·스마트폰)" },
-    { id:"p43", name:"스타트업 설계", tags:["진로"], notes:"전자기기(태블릿·스마트폰)" },
-    { id:"p44", name:"IMC(통합 마케팅 커뮤니케이션)", tags:["진로"], notes:"IMC 키트(화이트보드, 보드마카, 상세표), 유인물-IMC견적, 전자기기(태블릿·스마트폰)" },
-    { id:"p45", name:"경제 전략", tags:["진로","교과","민주시민"], notes:"유인물-경제전략, 경제전략 키트(판사봉, 마이크)" },
-    { id:"p46", name:"정책 연구", tags:["진로","교과","민주시민"], notes:"유인물-정책 점수표" },
-    { id:"p47", name:"바이오 파이썬", tags:["교과"], notes:"전자기기(태블릿·스마트폰)" },
-    { id:"p48", name:"모빌리티", tags:["캠프"], notes:"노트북, 충전기·마우스, 멀티탭, 라인트레이서 확인필요" },
+    { id:"p37", name:"인포메이션 디자인", tags:["진로","교과","지속가능","민주시민"], 
+        nameMap: {
+        "교과": "미술-인포메이션 디자인",
+        "지속가능": "지속가능발전 디자인 랩",
+        "민주시민": "공공 데이터 시각화 프로젝트"
+        },
+      notes:"유인물-UI/UX 분석, 전자기기(태블릿·스마트폰)" ,
+      printFiles:[
+        { label:"UX·UI 분석", desc:"(2인 1조)", pdf:"./files/information-design-uxui.pdf", hwp:"./files/information-design-uxui.hwp" },
+        { label:"민주시민 공공서비스", desc:"(2인 1조)", pdf:"./files/democratic-design-uxui.pdf", hwp:"./files/democratic-design-uxui.hwp" },
+      ]
+    },
+    { id:"p38", name:"3D설계 모델링", tags:["진로","교과","지속가능"], 
+        nameMap: {
+        "교과": "과학-3D설계 건축",
+        "지속가능": "3D펜으로 만드는 친환경 구조물"
+        },    
+      notes:"3D 키트(3D펜, 어댑터·케이블, 필라멘트, 장갑, 가위, 도안), 멀티탭\n🔎 소모품: 필라멘트\n⚠️ 교과 : 진동기 (3대 보유, 1개반 1대 사용)" },
+    { id:"p39", name:"로봇", tags:["진로","교과"], 
+        nameMap: {
+        "교과": "물리-로봇",
+        }, 
+      notes:"유킷 or 지무, 유킷통, 배틀맵, 전자기기(태블릿·스마트폰)\n* 네오봇: 자율주행 키트와 동일" },
+    { id:"p40", name:"디지털 헬스", tags:["진로","지속가능"], 
+        nameMap: {
+        "지속가능": "스마트 건강 연구소"
+        },  
+      notes:"측정 키트 8세트 구성(악력기, 산소포화도, 혈압, 민첩성, 자), AAA건전지, 유인물-디지털헬스",
+      printFiles:[
+        { label:"자가진단 유인물", desc:"개별", pdf:"./files/digital-healthcare.pdf", hwp:"./files/digital-healthcare.hwp" },
+        { label:"민주시민 공공서비스", desc:"(2인 1조)", pdf:"./files/Smart Health Lab.pdf", hwp:"./files/Smart Health Lab.hwp" },
+      ]
+     },
+    { id:"p41", name:"자율주행", tags:["진로","지속가능"], 
+        nameMap: {
+        "지속가능": "친환경 도시를 위한 자율주행"
+        }, 
+    notes:"네오봇, 네오봇통(4인 1조), 주행맵, 전자기기(태블릿·스마트폰)" },
+    { id:"p42", name:"스타트업 설계", tags:["진로"], notes:"전자기기(태블릿·스마트폰)" },
+    { id:"p43", name:"IMC(통합 마케팅 커뮤니케이션)", tags:["진로"], notes:"IMC 키트(화이트보드, 보드마카, 상세표), 유인물-IMC견적, 전자기기(태블릿·스마트폰)",
+      printFiles:[
+        { label:"마케팅 기획안", desc:"(2인 1조)", pdf:"./files/imc-quote.pdf", hwp:"./files/imc-quote.hwp" },
+      ]
+     },
+    { id:"p44", name:"경제 전략", tags:["진로","교과","민주시민"], 
+        nameMap: {
+        "교과": "사회-경제 전략",
+        "민주시민": "공공경제 전략 설계",
+        },
+      notes:"유인물-경제전략, 경제전략 키트(판사봉, 마이크)",
+      printFiles:[
+        { label:"유인물 2차시", desc:"(6장 고정)", pdf:"./files/economic-auction.pdf", hwp:"./files/economic-auction.hwp" },
+        { label:"유인물 3차시", desc:"(6인 1조)", pdf:"./files/economic-Chicken Game.pdf", hwp:"./files/economic-Chicken Game.hwp" },
+        { label:"유인물 3차시 점수표", desc:"(6인 1조)", pdf:"./files/economic-Chicken Game Score Sheet.pdf", hwp:"./files/economic-Chicken Game Score Sheet.hwp" },
+      ]
+     },
+    { id:"p45", name:"정책 연구", tags:["진로","교과","민주시민"], 
+        nameMap: {
+        "교과": "사회-정책 연구",
+        "민주시민": "정책결정 시뮬레이션",
+        },
+      notes:"유인물-정책 점수표",
+      printFiles:[
+        { label:"정책 연구 성과시트", desc:"(4인 1조)", pdf:"./files/policy-research.pdf", hwp:"./files/policy-research.hwp" },
+      ]
+     },
+    { id:"p46", name:"바이오 파이썬", tags:["교과"], 
+        nameMap: {
+        "교과": "생명-바이오 파이썬"
+        },
+    notes:"전자기기(태블릿·스마트폰)" },
+    { id:"p47", name:"모빌리티", tags:["캠프"], notes:"노트북, 충전기·마우스, 멀티탭, 라인트레이서 확인필요" },
+    { id:"p48", name:"휴머노이드", tags:["캠프"], notes:"알파 미니, 알파 충전기, 스마트폰\n⚠️ 알파1 앱 설치된 스마트폰" },
   ];
 
   const BOOTH_PROGRAM_MASTER = [
@@ -979,7 +1323,7 @@
       extras: [
         { item:"카트", qty:1 },
         { item:"생수", qty:1 },
-        { item:"현수막(부스)", qty:1 },
+        { item:"현수막+배너(부스)", qty:1 },
         { item:"릴선", qty:1 },
         { item:"HDMI선", qty:1 },
       ]
@@ -1272,10 +1616,22 @@
   }
 
   function getFilteredPrograms(){
-    const q = (elSearch.value||"").trim().toLowerCase();
+    const q = (elSearch.value || "").trim().toLowerCase();
     const programs = getCurrentPrograms();
+
     if(!q) return programs;
-    return programs.filter(p=>p.name.toLowerCase().includes(q));
+
+    return programs.filter(p => {
+      const name = (p.name || "").toLowerCase();
+      const tags = (p.tags || []).join(" ").toLowerCase();
+      const notes = (p.notes || "").toLowerCase();
+
+      return (
+        name.includes(q) ||
+        tags.includes(q) ||
+        notes.includes(q)
+      );
+    });
   }
 
   function renderProgramList(){
@@ -1331,142 +1687,211 @@
       });
     });
   }
+function tagClass(tag){
+  if(tag === "진로") return "career";
+  if(tag === "교과") return "subject";
+  if(tag === "지속가능") return "sustain";
+  if(tag === "초등") return "elementary";
+  if(tag === "캠프") return "camp";
+  if(tag === "부스") return "booth";
+  if(tag === "민주시민") return "civic";
+  return "default";
+}
 
-  function renderAssign(){
-    const current = getCurrentData();
-    const selected = current.selected
-      .map(id=>getCurrentPrograms().find(p=>p.id===id))
-      .filter(Boolean);
+function renderAssign(){
+  const current = getCurrentData();
+  const selected = current.selected
+    .map(id=>getCurrentPrograms().find(p=>p.id===id))
+    .filter(Boolean);
 
-    elSelectedCount2.textContent = String(selected.length);
+  elSelectedCount2.textContent = String(selected.length);
 
-    if(getCurrentPrograms().length === 0){
-      elAssignCards.innerHTML = `<div class="emptyBox">부스용 프로그램 목록을 넣으면 여기에 같은 화면으로 표시돼요.</div>`;
-      return;
-    }
+  if(getCurrentPrograms().length === 0){
+    elAssignCards.innerHTML = `<div class="emptyBox">부스용 프로그램 목록을 넣으면 여기에 같은 화면으로 표시돼요.</div>`;
+    return;
+  }
 
-    if(selected.length===0){
-      elAssignCards.innerHTML = `<div class="help">왼쪽에서 프로그램을 선택하면 이곳에 카드가 생성됩니다.</div>`;
-      return;
-    }
+  if(selected.length===0){
+    elAssignCards.innerHTML = `<div class="help">왼쪽에서 프로그램을 선택하면 이곳에 카드가 생성됩니다.</div>`;
+    return;
+  }
 
-    elAssignCards.innerHTML = selected.map(p=>{
-      const d = current.programData[p.id];
-      return `
-        <div class="card">
-          <div class="cardTitle">
+  elAssignCards.innerHTML = selected.map(p=>{
+    const d = current.programData[p.id];
+    return `
+      <div class="card">
+        <div class="cardTitle">
+          <div class="cardTitleMain">
             <h3 title="${escapeHtml(p.name)}">${escapeHtml(p.name)}</h3>
 
-            <div class="programTags">
-              ${(p.tags||[]).map(tag=>{
-                if(tag==="진로") return `<span class="programTag tag-career">진로</span>`;
-                if(tag==="교과") return `<span class="programTag tag-subject">교과</span>`;
-                if(tag==="지속가능") return `<span class="programTag tag-sustain">지속가능</span>`;
-                if(tag==="초등") return `<span class="programTag tag-elementary">초등</span>`;
-                if(tag==="캠프") return `<span class="programTag tag-camp">캠프</span>`;
-                if(tag==="부스") return `<span class="programTag tag-booth">부스</span>`;
-                if(tag==="민주시민") return `<span class="programTag tag-civic">민주시민</span>`;
-                return "";
-              }).join("")}
-            </div>
+              <div class="programTags">
+                ${(p.tags || []).map(tag => {
+                  const alias = p.nameMap && p.nameMap[tag];
+
+                  return `
+                    <span class="programTag tag-${tagClass(tag)}">
+                      ${escapeHtml(tag)}
+                      ${alias ? `<span class="tagTooltip">${escapeHtml(alias)}</span>` : ""}
+                    </span>
+                  `;
+                }).join("")}
+              </div>
           </div>
 
-          <div class="rowInputs">
-            <div class="inField">
-              <span>노트북</span>
-              <input type="number" min="0" step="1" data-laptop="${escapeHtml(p.id)}" value="${Number(d.laptop||0)}">
-            </div>
-            <div class="inField">
-              <span>태블릿</span>
-              <input type="number" min="0" step="1" data-tablet="${escapeHtml(p.id)}" value="${Number(d.tablet||0)}">
-            </div>
-            <div class="inField">
-              <span>스마트폰</span>
-              <input type="number" min="0" step="1" data-phone="${escapeHtml(p.id)}" value="${Number(d.smartphone||0)}">
-            </div>
-            <div class="inField">
-              <span>인원</span>
-              <input type="number" min="0" step="1" data-students="${escapeHtml(p.id)}" value="${Number(d.students||0)}">
-            </div>
-          </div>
-
-          <div class="help" style="margin-top:8px; margin-bottom:6px;">메모(학교 기기 사용, 기타사항)</div>
-          <textarea data-notes="${escapeHtml(p.id)}">${escapeHtml(d.notes || "")}</textarea>
+          ${renderPrintTools(p)}
         </div>
-      `;
-    }).join("");
 
-    elAssignCards.querySelectorAll('input[data-laptop]').forEach(inp=>{
-      inp.addEventListener("input", ()=>{
-        const currentData = getCurrentData();
-        const id = inp.getAttribute("data-laptop");
-        currentData.programData[id].laptop = clampInt(inp.value);
-        if(Object.prototype.hasOwnProperty.call(currentData.totalsOverrides,"노트북")) delete currentData.totalsOverrides["노트북"];
-        saveState();
-        renderTotals();
-        renderPreviewOnly();
-      });
+        <div class="rowInputs">
+          <div class="inField">
+            <span>노트북</span>
+            <input type="number" min="0" step="1" data-laptop="${escapeHtml(p.id)}" value="${Number(d.laptop||0)}">
+          </div>
+          <div class="inField">
+            <span>태블릿</span>
+            <input type="number" min="0" step="1" data-tablet="${escapeHtml(p.id)}" value="${Number(d.tablet||0)}">
+          </div>
+          <div class="inField">
+            <span>스마트폰</span>
+            <input type="number" min="0" step="1" data-phone="${escapeHtml(p.id)}" value="${Number(d.smartphone||0)}">
+          </div>
+          <div class="inField">
+            <span>인원</span>
+            <input type="number" min="0" step="1" data-students="${escapeHtml(p.id)}" value="${Number(d.students||0)}">
+          </div>
+        </div>
+
+        <div class="help" style="margin-top:8px; margin-bottom:6px;">메모(학교 기기 사용, 기타사항)</div>
+        <textarea data-notes="${escapeHtml(p.id)}">${escapeHtml(d.notes || "")}</textarea>
+      </div>
+    `;
+  }).join("");
+
+  elAssignCards.querySelectorAll('input[data-laptop]').forEach(inp=>{
+    inp.addEventListener("input", ()=>{
+      const currentData = getCurrentData();
+      const id = inp.getAttribute("data-laptop");
+      currentData.programData[id].laptop = clampInt(inp.value);
+      if(Object.prototype.hasOwnProperty.call(currentData.totalsOverrides,"노트북")) delete currentData.totalsOverrides["노트북"];
+      saveState();
+      renderTotals();
+      renderPreviewOnly();
     });
+  });
 
-    elAssignCards.querySelectorAll('input[data-tablet]').forEach(inp=>{
-      inp.addEventListener("input", ()=>{
-        const currentData = getCurrentData();
-        const id = inp.getAttribute("data-tablet");
-        currentData.programData[id].tablet = clampInt(inp.value);
-        if(Object.prototype.hasOwnProperty.call(currentData.totalsOverrides,"태블릿")) delete currentData.totalsOverrides["태블릿"];
-        saveState();
-        renderTotals();
-        renderPreviewOnly();
-      });
+  elAssignCards.querySelectorAll('input[data-tablet]').forEach(inp=>{
+    inp.addEventListener("input", ()=>{
+      const currentData = getCurrentData();
+      const id = inp.getAttribute("data-tablet");
+      currentData.programData[id].tablet = clampInt(inp.value);
+      if(Object.prototype.hasOwnProperty.call(currentData.totalsOverrides,"태블릿")) delete currentData.totalsOverrides["태블릿"];
+      saveState();
+      renderTotals();
+      renderPreviewOnly();
     });
+  });
 
-    elAssignCards.querySelectorAll('input[data-phone]').forEach(inp=>{
-      inp.addEventListener("input", ()=>{
-        const currentData = getCurrentData();
-        const id = inp.getAttribute("data-phone");
-        currentData.programData[id].smartphone = clampInt(inp.value);
-        if(Object.prototype.hasOwnProperty.call(currentData.totalsOverrides,"스마트폰")) delete currentData.totalsOverrides["스마트폰"];
-        saveState();
-        renderTotals();
-        renderPreviewOnly();
-      });
+  elAssignCards.querySelectorAll('input[data-phone]').forEach(inp=>{
+    inp.addEventListener("input", ()=>{
+      const currentData = getCurrentData();
+      const id = inp.getAttribute("data-phone");
+      currentData.programData[id].smartphone = clampInt(inp.value);
+      if(Object.prototype.hasOwnProperty.call(currentData.totalsOverrides,"스마트폰")) delete currentData.totalsOverrides["스마트폰"];
+      saveState();
+      renderTotals();
+      renderPreviewOnly();
     });
+  });
 
-    elAssignCards.querySelectorAll('input[data-students]').forEach(inp=>{
-      inp.addEventListener("input", ()=>{
-        const currentData = getCurrentData();
-        const id = inp.getAttribute("data-students");
-        const v = clampInt(inp.value);
-        currentData.programData[id].students = v;
+  elAssignCards.querySelectorAll('input[data-students]').forEach(inp=>{
+    inp.addEventListener("input", ()=>{
+      const currentData = getCurrentData();
+      const id = inp.getAttribute("data-students");
+      const v = clampInt(inp.value);
+      currentData.programData[id].students = v;
 
-        const program = getCurrentPrograms().find(x=>x.id===id);
-        const auto = getAutoDeviceDefaults(state.mode, program.name, v);
+      const program = getCurrentPrograms().find(x=>x.id===id);
+      const auto = getAutoDeviceDefaults(state.mode, program.name, v);
 
-        currentData.programData[id].laptop = auto.laptop;
-        currentData.programData[id].tablet = auto.tablet;
-        currentData.programData[id].smartphone = auto.smartphone;
+      currentData.programData[id].laptop = auto.laptop;
+      currentData.programData[id].tablet = auto.tablet;
+      currentData.programData[id].smartphone = auto.smartphone;
 
-        if(Object.prototype.hasOwnProperty.call(currentData.totalsOverrides,"노트북")) delete currentData.totalsOverrides["노트북"];
-        if(Object.prototype.hasOwnProperty.call(currentData.totalsOverrides,"태블릿")) delete currentData.totalsOverrides["태블릿"];
-        if(Object.prototype.hasOwnProperty.call(currentData.totalsOverrides,"스마트폰")) delete currentData.totalsOverrides["스마트폰"];
+      if(Object.prototype.hasOwnProperty.call(currentData.totalsOverrides,"노트북")) delete currentData.totalsOverrides["노트북"];
+      if(Object.prototype.hasOwnProperty.call(currentData.totalsOverrides,"태블릿")) delete currentData.totalsOverrides["태블릿"];
+      if(Object.prototype.hasOwnProperty.call(currentData.totalsOverrides,"스마트폰")) delete currentData.totalsOverrides["스마트폰"];
 
-        saveState();
-        renderAssign();
-        renderTotals();
-        renderPreviewOnly();
-      });
+      saveState();
+      renderAssign();
+      renderTotals();
+      renderPreviewOnly();
     });
+  });
 
-    elAssignCards.querySelectorAll('textarea[data-notes]').forEach(ta=>{
-      ta.addEventListener("input", ()=>{
-        const currentData = getCurrentData();
-        const id = ta.getAttribute("data-notes");
-        currentData.programData[id].notes = ta.value;
-        saveState();
-        renderPreviewOnly();
-      });
+  elAssignCards.querySelectorAll('textarea[data-notes]').forEach(ta=>{
+    ta.addEventListener("input", ()=>{
+      const currentData = getCurrentData();
+      const id = ta.getAttribute("data-notes");
+      currentData.programData[id].notes = ta.value;
+      saveState();
+      renderPreviewOnly();
     });
-  }
+  });
+
+  bindPrintMenus();
+}
+
+function renderPrintTools(program){
+  if(state.mode !== "lesson") return "";
+
+  const files = Array.isArray(program.printFiles) ? program.printFiles : [];
+  if(files.length === 0) return "";
+
+  const menuText = program.printMenuText || "유인물";
+  const menuId = `print-menu-${program.id}`;
+
+  return `
+    <div class="cardTitleActions" data-print-wrap>
+      <button type="button" class="btn printQuick" data-print-toggle="${menuId}">
+        ${escapeHtml(menuText)}
+      </button>
+
+      <div class="printMenu" id="${menuId}">
+        ${files.map(file => `
+          <div class="printMenuItem">
+            <div class="printMenuLabel">  
+              ${escapeHtml(file.label)}
+              ${file.desc ? `<span class="printInlineDesc">${escapeHtml(file.desc)}</span>` : ""}
+            </div>
+            <div class="printMenuBtns">
+              <a class="printMiniBtn primary" href="${escapeHtml(file.pdf || "#")}" target="_blank">출력</a>
+              ${file.hwp ? `<a class="printMiniBtn" href="${escapeHtml(file.hwp)}" download>다운로드</a>` : ""}
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  `;
+}
+
+function bindPrintMenus(){
+  document.querySelectorAll("[data-print-toggle]").forEach(btn=>{
+    btn.onclick = (e)=>{
+      e.stopPropagation();
+
+      const menuId = btn.getAttribute("data-print-toggle");
+      const currentMenu = document.getElementById(menuId);
+      const isOpen = currentMenu.classList.contains("open");
+
+      document.querySelectorAll(".printMenu.open").forEach(menu=>{
+        menu.classList.remove("open");
+      });
+
+      if(!isOpen){
+        currentMenu.classList.add("open");
+      }
+    };
+  });
+}
 
   function calcBaseDeviceSums(){
     const current = getCurrentData();
@@ -1501,6 +1926,15 @@
 
     return totals;
   }
+
+
+    document.addEventListener("click", (e)=>{
+      if(!e.target.closest("[data-print-wrap]")){
+        document.querySelectorAll(".printMenu.open").forEach(menu=>{
+          menu.classList.remove("open");
+        });
+      }
+    });
 
   function renderTotals(){
     const current = getCurrentData();
@@ -1774,26 +2208,27 @@
     `;
   }
 
-  function render(){
-    bindMeta();
-    updateModeButtons();
-    renderProgramList();
-    renderAssign();
-    renderTotals();
-    renderPreviewOnly();
-    renderInfoNote();
-    elPickedCount.textContent = String(getCurrentData().selected.length);
-  }
+function render(){
+  bindMeta();
+  updateModeButtons();
+  renderProgramList();
+  renderAssign();
+  renderTotals();
+  renderPreviewOnly();
+  renderInfoNote();
+  elPickedCount.textContent = String(getCurrentData().selected.length);
+}
 
   elSearch.addEventListener("input", renderProgramList);
 
   document.getElementById("btnAll").onclick = ()=>{
     const current = getCurrentData();
-    const programs = getCurrentPrograms();
+    const programs = getFilteredPrograms(); // 검색된 목록만 선택
 
-    current.selected = programs.map(p=>p.id);
+    current.selected = programs.map(p => p.id);
 
     const people = clampInt(current.meta.people);
+
     for(const p of programs){
       const d = makeDefaultProgramData(state.mode, p, people);
       current.programData[p.id] = {
