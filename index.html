@@ -303,6 +303,42 @@
       margin-bottom:10px;
     }
 
+#extrasMemoBox{
+  width:100%;
+  min-height:72px;
+  white-space:pre-wrap;   /* ← 이걸로 변경 */
+  overflow-y:auto;        /* 세로 스크롤 */
+}
+
+.totalsInline{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:10px;
+  margin-top:10px;
+}
+
+.totalCard{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:10px 12px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#fff;
+}
+
+.totalCard strong{
+  font-size:13px;
+  font-weight:800;
+  color:#374151;
+}
+
+.totalCard input{
+  width:100px;
+  text-align:center;
+}
+
     .list{
       border:1px solid var(--line);
       border-radius: 12px;
@@ -505,6 +541,19 @@
       border-color:var(--primary);
     }
 
+.printExtraHeading{
+  font-size:16px;
+  font-weight:900;
+  margin:16px 0 6px;
+}
+
+.printExtraText{
+  font-size:14px;
+  font-weight:800;
+  line-height:1.6;
+  white-space:pre-wrap;
+}
+
     @media (max-width: 980px){
       .cardTitleActions{
         width:100%;
@@ -623,6 +672,14 @@
       background:#fff;
     }
 
+    .previewEdit{
+      width:100%;
+      min-height:520px;
+      resize:vertical;
+      border:1px solid var(--line);
+      outline:none;
+    }
+
     .sectionTop{
       display:flex;
       justify-content:space-between;
@@ -645,11 +702,19 @@
       font-size:13px;
     }
 
+.singleLineMemo{
+  width:100%;
+  min-height:56px;
+  resize:none;
+  white-space:pre-wrap;
+  overflow-y:auto;
+}
+
     .printArea{ display:none; }
 
     .infoNoteBox{
-      margin:8px 0 8px;
-      padding:10px 10px;
+      margin:8px 0 12px;
+      padding:14px;
       border:1px solid var(--line);
       border-radius:12px;
       background:#fafbff;
@@ -659,13 +724,13 @@
       font-size:16px;
       font-weight:800;
       color:var(--text);
-      margin-bottom:6px;
+      margin-bottom:8px;
     }
 
     .infoNoteContent{
       white-space:pre-line;
       font-size:14px;
-      line-height:1.5;
+      line-height:1.6;
       color:#374151;
     }
 
@@ -731,47 +796,48 @@
       width:100%;
     }
 
-    .printHead{
-      margin-bottom: 14px;
-      padding-bottom: 10px;
-      border-bottom: 2px solid #111827;
-    }
+.printHead{
+  margin-bottom: 12px;
+}
 
-    .printHeadTitle{
-      font-size: 20px;
-      font-weight: 900;
-      margin-bottom: 10px;
-    }
+.printHeadTitle{
+  font-size: 22px;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
 
-    .printMeta{
-      display:grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap:10px;
-      font-size: 14px;
-      font-weight: 900;
-    }
+.printMeta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:18px;
+  font-size: 13px;
+  font-weight: 800;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #111827;
+}
 
-    .printMeta div{
-      line-height:1.4;
-    }
+.printMeta div{
+  line-height:1.4;
+}
 
-    .printProgram{
-      margin-bottom: 14px;
-      break-inside: avoid;
-      page-break-inside: avoid;
-    }
+.printProgram{
+  margin-bottom: 10px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
 
-    .printProgramTitle{
-      font-size: 15px;
-      font-weight: 900;
-      margin-bottom: 4px;
-    }
+.printProgramTitle{
+  font-size: 14px;
+  font-weight: 900;
+  margin-bottom: 3px;
+}
 
-    .printProgramContent{
-      white-space: pre-wrap;
-      font-size: 12px;
-      line-height: 1.5;
-    }
+.printProgramContent{
+  white-space: pre-wrap;
+  font-size: 11.5px;
+  line-height: 1.45;
+  margin-left: 2px;
+}
 
     .printSummary{
       margin-top: 16px;
@@ -795,6 +861,66 @@
       white-space: pre-wrap;
       font-size: 12px;
       line-height: 1.5;
+    }
+
+    .usbTableWrap{
+      margin-top:12px;
+      border-radius:12px;
+      overflow:hidden;
+      border:1px solid var(--line);
+      background:#ffffff;
+    }
+
+    .usbTable{
+      width:100%;
+      border-collapse:collapse;
+      background:#ffffff;
+      color:var(--text);
+      table-layout:fixed;
+    }
+
+    .usbTable th,
+    .usbTable td{
+      padding:8px 12px;
+      text-align:left;
+      border-bottom:1px solid var(--line);
+      font-size:12.5px;
+      line-height:1.3;
+      vertical-align:top;
+      word-break:keep-all;
+    }
+
+    .usbTable th{
+      background:#eef4ff;
+      color:#2563eb;
+      font-weight:800;
+    }
+
+    .usbTable td{
+      color:#111827;
+      font-weight:500;
+    }
+
+    .usbTable tbody tr:last-child td{
+      border-bottom:none;
+    }
+
+    .usbTable tbody tr:hover{
+      background:#f8fbff;
+    }
+
+    .usbTable th:first-child,
+    .usbTable td:first-child{
+      width:22%;
+      min-width:110px;
+      font-weight:700;
+      color:#111827;
+    }
+
+    .usbTable th:last-child,
+    .usbTable td:last-child{
+      width:78%;
+      color:#374151;
     }
 
     @media (max-width: 980px){
@@ -918,8 +1044,7 @@
     <div class="headerBottom">
       <div class="tabs" role="tablist" aria-label="탭">
         <button class="tab" id="tabAssign" aria-selected="true">프로그램 배정</button>
-        <button class="tab" id="tabTotals" aria-selected="false">전자기기 및 추가 항목</button>
-        <button class="tab" id="tabPreview" aria-selected="false">문구 미리보기</button>
+        <button class="tab" id="tabTotals" aria-selected="false">교구 확인</button>
       </div>
 
       <div class="actionBtns">
@@ -968,46 +1093,35 @@
       <div id="panelTotals" class="tabPanel" style="display:none;">
         <div class="contentTop">
           <div>
-            <h2 style="margin:0;">전자기기 및 추가 항목</h2>
-            <div class="help" id="modeHelpTotals">노트북/태블릿/스마트폰은 항상 표시됩니다. (여분도 여기서 입력 가능)</div>
+            <h2 style="margin:0;">교구 확인</h2>
+            <div class="help" id="modeHelpTotals">최종 확인용으로 참고사항, 문구, 전자기기, 추가 항목을 한 번에 봅니다.</div>
           </div>
-        </div>
-
-        <div style="margin-top:12px;">
-          <table>
-            <thead>
-              <tr><th>항목</th><th style="width:180px;">수량</th><th style="width:130px;">구분</th></tr>
-            </thead>
-            <tbody id="totalsTable"></tbody>
-          </table>
         </div>
 
         <div class="infoNoteBox">
           <div class="infoNoteTitle" id="infoTitle">참고 사항</div>
           <div class="infoNoteContent" id="infoContent"></div>
+          <div id="usbProgramTable"></div>
         </div>
 
         <div class="sectionTop">
-          <h2 id="extrasTitle">💡추가</h2>
-          <button class="btn no-print" id="btnAddExtra">+ 추가 교구</button>
+          <h2>전자기기 수량</h2>
         </div>
+        <div id="totalsInlineWrap"></div>
 
-        <table>
-          <thead>
-            <tr><th>항목</th><th style="width:180px;">수량</th><th style="width:120px;" class="no-print">삭제</th></tr>
-          </thead>
-          <tbody id="extrasTable"></tbody>
-        </table>
+        <div class="sectionTop">
+          <h2>추가 항목</h2>
+        </div>
+        <textarea id="extrasMemoBox" class="mono"></textarea>
+
+        <div class="sectionTop">
+          <h2>문구 미리보기</h2>
+          <button class="btn ghost" id="btnPreviewReset">문구 다시 생성</button>
+        </div>
+        <textarea id="previewBox" class="mono previewEdit"></textarea>
+
       </div>
 
-      <div id="panelPreview" class="tabPanel" style="display:none;">
-        <div class="contentTop">
-          <div>
-            <h2 style="margin:0;">문구 미리보기</h2>
-          </div>
-        </div>
-        <div id="previewBox" class="mono"></div>
-      </div>
     </main>
   </div>
 </div>
@@ -1015,12 +1129,14 @@
 <script>
   const STORAGE_KEY = "able_equipment_check_v_mode_split";
 
-  const LESSON_INFO_NOTE = `
+const LESSON_INFO_NOTE = `
 🔹교과 연계(융합), 지속가능발전 프로그램은 전용 현수막 지참
+🔹USB 설치 프로그램 목록 확인
 `.trim();
 
   const BOOTH_INFO_NOTE = `
-🔸부스 전용 배너(배너대), 현수막, 현수막 부착을 위한 테이프, 가위 지참
+🔸부스 전용 배너, 배너대, 현수막, 테이프, 가위 지참
+🔸보조 배터리, C타입 충전기, 릴선, 멀티탭 넉넉히 준비
 `.trim();
 
   const LESSON_PROGRAM_MASTER = [
@@ -1061,7 +1177,7 @@
         "지속가능": "스마트 농업 메이커스"
         },
         notes:`
-📦 기본 |  스마트팩토리용 유킷, 기물
+📦 기본 |  스마트 팩토리용 유킷, 기물
 🔌 장비 |  스마트폰`},
     { id:"p05", name:"신재생 에너지", tags:["진로","지속가능"], 
         nameMap: {
@@ -1078,7 +1194,7 @@
         "교과": "화학-제약"
         },
         notes:`
-📦 기본 |  제약카드(8장씩 10부)
+📦 기본 |  제약카드(8장씩 10부), 카드 삼각거치대
 🔌 장비 |  전자기기(태블릿·스마트폰)`},
     { id:"p07", name:"머신러닝", tags:["진로","초등","교과","지속가능"], 
         nameMap: {
@@ -1186,7 +1302,7 @@
         "지속가능": "VR로 그리는 지속가능한 미래도시"
         },
       notes:`
-⚠️ 확인 |  학급별 사용 카드보드 확인
+⚠️ 확인 |  1-2학년 파랑 카드보드, 3-6학년 갈색 카드보드 (상황에 따라 변경)
 📦 기본 |  카드보드(갈색/파랑), 돌돌이 테이프, 리필용 테이프
 🔌 장비 |  전자기기(태블릿·스마트폰)
 🔋 소모 |  리필용 테이프` },
@@ -1228,6 +1344,7 @@
      },
     { id:"p24", name:"미디어 광고 더빙", tags:["진로","초등"], notes:`
 🔌 장비 |  전자기기(태블릿·스마트폰)` },
+
     { id:"p25", name:"게임 기획", tags:["진로"], notes:`
 ⚠️ 확인 |  학교 사용가능 기기(노트북·태블릿·크롬북)
 🔌 장비 |  노트북, 충전기·마우스, 멀티탭
@@ -1243,6 +1360,7 @@
       notes:`
 ⚠️ 확인 |  학교 사용가능 기기(노트북·태블릿·크롬북)
 🔌 장비 |  태블릿(코딩용), 스마트폰(앱 확인용)` },
+
     { id:"p28", name:"앱 디자인", tags:["진로"], notes:`
 ⚠️ 확인 |  학교 사용가능 기기(노트북·태블릿·크롬북)
 🔌 장비 |  태블릿(코딩용), 스마트폰(앱 확인용)` },
@@ -1251,13 +1369,16 @@
         "교과": "물리-시뮬레이션"
         },
       notes:`
-⚠️ 확인 |  학교 사용가능 기기(노트북)
+⚠️ 확인 |  학교 사용가능 기기(노트북), 컴퓨터실은 USB 지참
+📦 기본 |  USB 5개(설치 프로그램 有)
 🔌 장비 |  노트북, 충전기·마우스, 멀티탭` },
+
     { id:"p30", name:"메이커", tags:["진로"], notes:`
 ⚠️ 확인 |  학교별 실습 확인
 📦 기본 |  네오봇, 네오봇 통(2인 1조)
 🔌 장비 |  전자기기(태블릿·스마트폰)
 📚 학급 |  아두이노-똑상1 키트(아두이노, LED, 서보모터, 아두이노 케이블, 점퍼 케이블), 노트북, 충전기·마우스, 멀티탭` },
+
     { id:"p31", name:"로고 디자인", tags:["진로"], notes:`
 ⚠️ 확인 |  포토프린터용 스마트폰 배터리 확인
 📦 기본 |  기업별 유인물(코팅), 카트리지+인화지
@@ -1265,10 +1386,11 @@
 🔋 소모 |  카트리지+인화지`,
       printFiles:[
         { label:"기업별 유인물", desc:"예비용 (코팅)", pdf:"./files/logo-design.pdf", hwp:"./files/logo-design.hwp" },
-      ]
-     },
+      ]},
+
     { id:"p32", name:"애니메이터", tags:["진로"], notes:`
 🔌 장비 |  태블릿` },
+
     { id:"p33", name:"시각디자인(퀴버)", tags:["진로","초등"], notes:`
 📦 기본 |  유인물-퀴버 도안, 색연필
 🔌 장비 |  전자기기(태블릿·스마트폰)` ,
@@ -1277,10 +1399,11 @@
         { label:"펭귄(Penfold)", desc:"개별", pdf:"./files/quiver-Penfold.pdf" },
         { label:"토끼(Ruby)", desc:"개별", pdf:"./files/quiver-Ruby.pdf" },
         { label:"오토바이(OHV)", desc:"개별", pdf:"./files/quiver-OHV.pdf" },
-      ]
-    },
+      ]},
+
     { id:"p34", name:"시각디자인(AI 캐릭터)", tags:["진로"], notes:`
 🔌 장비 |  전자기기(태블릿·스마트폰)` },
+
     { id:"p35", name:"인포메이션 디자인", tags:["진로","교과","지속가능","민주시민"], 
         nameMap: {
         "교과": "미술-인포메이션 디자인",
@@ -1378,7 +1501,7 @@
         "교과": "생명-바이오 파이썬"
         },
     notes:`
-📦 기본 |  보상용 간식, 포스트잇
+📦 기본 |  보상용 간식(칠판 부착용)
 🔌 장비 |  전자기기(태블릿·스마트폰)
 🔋 소모 |  보상용 간식` },
     { id:"p45", name:"모빌리티", tags:["캠프"], notes:`
@@ -1391,41 +1514,56 @@
   ];
 
   const BOOTH_PROGRAM_MASTER = [
-    { id:"b01", name: "배틀로 배우는 로봇 공학", tags:["부스"], notes: `
-⚠️ 확인 |  학교별 실습 확인
-📦 기본 |  유킷 또는 지무, 유킷 통(4인 1조), 배틀판 3개
-🔌 장비 |  전자기기(태블릿·스마트폰)
-📚 학급 |  지무 또는 네오봇, 네오봇 통(4인 1조)` },
-    { id:"b02", name: "VR로 만나는 가상현실", tags:["부스"], notes: `
-⚠️ 확인 |  학급별 사용 카드보드 확인
-📦 기본 |  카드보드(갈색/파랑), 돌돌이 테이프, 리필용 테이프
-🔌 장비 |  전자기기(태블릿·스마트폰)
-🔋 소모 |  리필용 테이프` },
-    { id:"b03", name: "증강현실 놀이터", tags:["부스"], notes: `
+    { id:"b01", name: "3D설계 모델링", tags:["부스"], notes: `
+📦 기본 |  3D펜 키트(펜, 어댑터·케이블, 필라멘트, 장갑, 가위, 도안, 필라멘트), 비닐봉투(쓰레기)
+🔌 장비 |  멀티탭, 릴선
+🔋 소모 |  필라멘트, 비닐봉투(쓰레기)` },
+
+    { id:"b02", name: "AI 게임·운동", tags:["부스"], notes: `
+⚠️ 확인 |  실습 기기 확인
+📦 기본 |  노트북, 충전기·마우스, 멀티탭, 릴선
+🔌 장비 |  강사용 모니터, 강사용 노트북, 충전기·마우스, 멀티탭, 릴선`  },
+
+    { id:"b03", name: "AI 닮은꼴 체험", tags:["부스"], notes: `
+⚠️ 확인 |  실습 기기 확인
+📦 기본 |  태블릿, C타입 충전기
+🔌 장비 |  강사용 모니터, 강사용 노트북, 충전기·마우스, 멀티탭, 릴선`  },
+
+    { id:"b04", name: "AI 시각디자인", tags:["부스"], notes: `
 📦 기본 |  유인물-퀴버 도안, 색연필
 🔌 장비 |  전자기기(태블릿·스마트폰)` },
-    { id:"b04", name: "코딩으로 배우는 자율주행", tags:["부스"], notes: `
+
+    { id:"b05", name: "VR", tags:["부스"], notes: `
+⚠️ 확인 |  학급별 사용 카드보드 확인
+📦 기본 |  카드보드(갈색/파랑), 돌돌이 테이프, 리필용 테이프, 비닐봉투(쓰레기)
+🔌 장비 |  전자기기(태블릿·스마트폰)
+🔋 소모 |  리필용 테이프, 비닐봉투(쓰레기)` },
+
+    { id:"b06", name: "디지털 디자이너", tags:["부스"], notes: `
+🔌 장비 |  전자기기(태블릿·스마트폰)` },
+
+    { id:"b07", name: "로봇", tags:["부스"], notes: `
+📦 기본 |  유킷 또는 지무, 유킷 통(2인 1조), 배틀판 4개
+🔌 장비 |  전자기기(태블릿·스마트폰)
+📚 학급 |  지무 또는 네오봇, 네오봇 통(2인 1조)` },
+
+    { id:"b08", name: "메타버스", tags:["부스"], notes: `
+📦 기본 |  태블릿, QR종이, C타입 충전기, 보조 배터리
+🔌 장비 |  강사용 모니터, 강사용 노트북, 충전기·마우스, 멀티탭, 릴선` },
+
+    { id:"b09", name: "스마트 팩토리", tags:["부스"], notes: `
+📦 기본 |  스마트 팩토리용 유킷, 기물
+🔌 장비 |  전자기기(태블릿·스마트폰)` },
+
+    { id:"b10", name: "애니메이터", tags:["부스"], notes: `
+🔌 장비 |  전자기기(태블릿·스마트폰)` },
+
+    { id:"b11", name: "자율주행", tags:["부스"], notes: `
 📦 기본 |  네오봇, 네오봇 통(4인 1조), 주행맵 4장
 🔌 장비 |  전자기기(태블릿·스마트폰) ` },
-    { id:"b05", name: "메타버스 운동회", tags:["부스"], notes: `
-📦 기본 |  태블릿
-🔌 장비 |  강사용 모니터, 강사용 노트북, 충전기·마우스, 멀티탭` },
-    { id:"b06", name: "3D펜으로 만드는 입체 세계", tags:["부스"], notes: `
-📦 기본 |  3D펜 키트(펜, 어댑터·케이블, 필라멘트, 장갑, 가위, 도안, 필라멘트)
-🔋 소모 |  필라멘트` },
-    { id:"b07", name: "디지털 디자이너", tags:["부스"], notes: `
-🔌 장비 |  전자기기(태블릿·스마트폰)` },
-    { id:"b08", name: "AI와 애니메이션", tags:["부스"], notes: `
-🔌 장비 |  전자기기(태블릿·스마트폰)` },
-    { id:"b09", name: "AI 닮은꼴 체험", tags:["부스"], notes: `
-⚠️ 확인 |  학교별 실습 확인
-📦 기본 |  태블릿 또는 노트북
-🔌 장비 |  강사용 모니터, 강사용 노트북, 충전기·마우스, 멀티탭`  },
-    { id:"b10", name: "로봇팔로 배우는 스마트 공장", tags:["부스"], notes: `
-📦 기본 |  스마트팩토리용 유킷, 기물
-🔌 장비 |  전자기기(태블릿·스마트폰)` },
-  ];
 
+
+  ];
 
   const TABLET_PER_PERSON_LESSON = new Set([
     "반도체", "AI 운동·게임", "게임 개발(엔트리)",
@@ -1445,17 +1583,20 @@
   ]);
 
   const TABLET_PER_PERSON_BOOTH = new Set([
-    "메타버스 운동회", "AI 닮은꼴 체험", "AI와 애니메이션", "증강현실 놀이터"
+    "메타버스", "AI 닮은꼴 체험", "AI 게임·운동", "애니메이터", "AI 시각디자인", "디지털 디자이너"
   ]);
 
   const LAPTOP_HALF_BOOTH = new Set([
-    "AI 닮은꼴 체험"
+    
   ]);
 
-  const LAPTOP_PER_PERSON_BOOTH = new Set([]);
+  const LAPTOP_PER_PERSON_BOOTH = new Set([
+     "AI 게임·운동","AI 닮은꼴 체험"
+  ]);
+ 
 
   const SMARTPHONE_PER_PERSON_BOOTH = new Set([
-    "배틀로 배우는 로봇 공학", "VR로 만나는 가상현실", "코딩으로 배우는 자율주행", "로봇팔로 배우는 스마트 공장"
+    "로봇", "VR", "자율주행", "스마트 팩토리"
   ]);
 
   const DEFAULT_MODE_DATA = {
@@ -1464,27 +1605,21 @@
       selected: [],
       programData: {},
       totalsOverrides: {},
+      manualTotals: { laptop:false, tablet:false, smartphone:false },
       extrasDevices: { laptop:0, tablet:0, smartphone:0 },
-      extras: [
-        { item:"카트", qty:1 },
-        { item:"생수", qty:1 },
-        { item:"현수막(진로/교과/지속)", qty:1 },
-        { item:"HDMI선", qty:1 },
-      ]
+      previewText: "",
+      extrasMemo: "카트 1, 생수 1, 현수막(진로/교과/지속) 1, HDMI선 1"
+      
     },
     booth: {
       meta: { school:"", session:"", date:"", people:0 },
       selected: [],
       programData: {},
       totalsOverrides: {},
+      manualTotals: { laptop:false, tablet:false, smartphone:false },
       extrasDevices: { laptop:0, tablet:0, smartphone:0 },
-      extras: [
-        { item:"카트", qty:1 },
-        { item:"생수", qty:1 },
-        { item:"현수막+배너(부스)", qty:1 },
-        { item:"릴선", qty:1 },
-        { item:"HDMI선", qty:1 },
-      ]
+      previewText: "",
+      extrasMemo: "카트 1, 생수 1, 현수막+부스용 배너 1, 릴선 1, HDMI 선, 보조배터리"
     }
   };
 
@@ -1575,7 +1710,7 @@
 
   function loadState(){
     try{
-      const raw = localStorage.getItem(STORAGE_KEY);
+      const raw = sessionStorage.getItem(STORAGE_KEY);
       if(!raw) return initState();
 
       const parsed = JSON.parse(raw);
@@ -1595,7 +1730,8 @@
           current.programData = current.programData || {};
           current.totalsOverrides = current.totalsOverrides || {};
           current.extrasDevices = current.extrasDevices || { laptop:0, tablet:0, smartphone:0 };
-          current.extras = Array.isArray(current.extras) ? current.extras : deepClone(DEFAULT_MODE_DATA[mode].extras);
+          current.previewText = typeof current.previewText === "string" ? current.previewText : "";
+          current.extrasMemo = typeof current.extrasMemo === "string" ? current.extrasMemo : (DEFAULT_MODE_DATA[mode].extrasMemo || "");
 
           for(const p of programs){
             if(!current.programData[p.id]){
@@ -1616,7 +1752,9 @@
         migrated.lesson.programData = parsed.programData || {};
         migrated.lesson.totalsOverrides = parsed.totalsOverrides || {};
         migrated.lesson.extrasDevices = parsed.extrasDevices || { laptop:0, tablet:0, smartphone:0 };
+        migrated.lesson.previewText = typeof parsed.previewText === "string" ? parsed.previewText : "";
         migrated.lesson.extras = Array.isArray(parsed.extras) ? parsed.extras : deepClone(DEFAULT_MODE_DATA.lesson.extras);
+        migrated.lesson.extrasMemo = typeof parsed.extrasMemo === "string"  ? parsed.extrasMemo  : (DEFAULT_MODE_DATA.lesson.extrasMemo || "");
 
         for(const p of LESSON_PROGRAM_MASTER){
           if(!migrated.lesson.programData[p.id]){
@@ -1636,7 +1774,7 @@
   }
 
   function saveState(){
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   }
 
   function escapeHtml(s){
@@ -1680,24 +1818,55 @@
 
   const tabAssign = document.getElementById("tabAssign");
   const tabTotals = document.getElementById("tabTotals");
-  const tabPreview = document.getElementById("tabPreview");
   const panelAssign = document.getElementById("panelAssign");
   const panelTotals = document.getElementById("panelTotals");
-  const panelPreview = document.getElementById("panelPreview");
 
   const modeLabelAssign = document.getElementById("modeLabelAssign");
   const modeHelpAssign = document.getElementById("modeHelpAssign");
   const modeHelpTotals = document.getElementById("modeHelpTotals");
   const elInfoTitle = document.getElementById("infoTitle");
   const elInfoContent = document.getElementById("infoContent");
+  const elUsbProgramTable = document.getElementById("usbProgramTable");
 
   function renderInfoNote(){
     if(state.mode === "lesson"){
       elInfoTitle.textContent = "⚠️ 수업 운영 참고 사항";
       elInfoContent.textContent = LESSON_INFO_NOTE;
+
+      elUsbProgramTable.innerHTML = `
+        <div class="usbTableWrap">
+          <table class="usbTable">
+            <thead>
+              <tr>
+                <th>프로그램</th>
+                <th>설치 항목</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>설치 프로그램</td>
+                <td>ablle line, Algodoo_2_2_4-x64, arduino-1.8.19-windows, CH341SER, EMGFilters-master, p5.serialcontrol-win32-x64, VSCodeUserSetup-x64-1.115.0</td>
+              </tr>
+              <tr>
+                <td>엔트리</td>
+                <td>Entry_2.1.33_Setup, Entry_HW_1.9.74_Setup, [에이블] AI 게임_엔트리, [에이블] AI 게임_코딩</td>
+              </tr>
+              <tr>
+                <td>APK</td>
+                <td>네오봇.apk, Alpha 1_3.2.1.0_Apkpure.apk</td>
+              </tr>
+              <tr>
+                <td>실습 자료</td>
+                <td>디지털헬스, 메이커, 의공학, servo1, 디지털기기 활용</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `;
     }else{
       elInfoTitle.textContent = "⚠️ 부스 운영 참고사항";
       elInfoContent.textContent = BOOTH_INFO_NOTE;
+      elUsbProgramTable.innerHTML = "";
     }
   }
 
@@ -1727,9 +1896,8 @@
 
   function setTab(which){
     const all = [
-      {tab:tabAssign, panel:panelAssign, key:"assign"},
-      {tab:tabTotals, panel:panelTotals, key:"totals"},
-      {tab:tabPreview, panel:panelPreview, key:"preview"},
+  {tab:tabAssign, panel:panelAssign, key:"assign"},
+  {tab:tabTotals, panel:panelTotals, key:"totals"}
     ];
     for(const t of all){
       const on = t.key === which;
@@ -1741,7 +1909,7 @@
 
   tabAssign.onclick = ()=>setTab("assign");
   tabTotals.onclick = ()=>setTab("totals");
-  tabPreview.onclick = ()=>setTab("preview");
+
 
   function bindMeta(){
     const current = getCurrentData();
@@ -1931,7 +2099,7 @@ function renderAssign(){
       currentData.programData[id].laptop = clampInt(inp.value);
       if(Object.prototype.hasOwnProperty.call(currentData.totalsOverrides,"노트북")) delete currentData.totalsOverrides["노트북"];
       saveState();
-      renderTotals();
+      renderTotalsInline();
       renderPreviewOnly();
     });
   });
@@ -1943,7 +2111,7 @@ function renderAssign(){
       currentData.programData[id].tablet = clampInt(inp.value);
       if(Object.prototype.hasOwnProperty.call(currentData.totalsOverrides,"태블릿")) delete currentData.totalsOverrides["태블릿"];
       saveState();
-      renderTotals();
+      renderTotalsInline();
       renderPreviewOnly();
     });
   });
@@ -1955,13 +2123,13 @@ function renderAssign(){
       currentData.programData[id].smartphone = clampInt(inp.value);
       if(Object.prototype.hasOwnProperty.call(currentData.totalsOverrides,"스마트폰")) delete currentData.totalsOverrides["스마트폰"];
       saveState();
-      renderTotals();
+      renderTotalsInline();
       renderPreviewOnly();
     });
   });
 
   elAssignCards.querySelectorAll('input[data-students]').forEach(inp=>{
-    inp.addEventListener("input", ()=>{
+    inp.addEventListener("change", ()=>{
       const currentData = getCurrentData();
       const id = inp.getAttribute("data-students");
       const v = clampInt(inp.value);
@@ -1980,7 +2148,7 @@ function renderAssign(){
 
       saveState();
       renderAssign();
-      renderTotals();
+      renderTotalsInline();
       renderPreviewOnly();
     });
   });
@@ -2029,6 +2197,29 @@ function renderPrintTools(program){
       </div>
     </div>
   `;
+}
+
+const elExtrasMemoBox = document.getElementById("extrasMemoBox");
+
+function renderExtrasMemo(){
+  const current = getCurrentData();
+  elExtrasMemoBox.value = current.extrasMemo || "";
+}
+
+elExtrasMemoBox.addEventListener("input", ()=>{
+  const current = getCurrentData();
+
+current.extrasMemo = elExtrasMemoBox.value.trim();
+
+  saveState();
+  renderPreviewOnly();
+});
+
+function formatExtrasOneLine(text){
+  return text
+    .replace(/\n+/g, ", ")
+    .replace(/,\s*,/g, ", ")
+    .trim();
 }
 
 function bindPrintMenus(){
@@ -2094,131 +2285,48 @@ function bindPrintMenus(){
       }
     });
 
-  function renderTotals(){
-    const current = getCurrentData();
-    const totals = calcTotals();
-    const ALWAYS_SHOW = ["노트북","태블릿","스마트폰"];
+function renderTotalsInline(){
+  const totals = calcTotals();
+  const el = document.getElementById("totalsInlineWrap");
 
-    const keys = Object.keys(totals)
-      .filter(k => ALWAYS_SHOW.includes(k) || Number(totals[k]) > 0 || Object.prototype.hasOwnProperty.call(current.totalsOverrides||{}, k))
-      .sort((a,b)=>a.localeCompare(b,"ko"));
+  el.innerHTML = `
+    <div class="totalsInline">
+      <div class="totalCard">
+        <strong>노트북</strong>
+        <input type="number" min="0" step="1" data-inline-total="노트북" value="${Number(totals["노트북"]||0)}">
+      </div>
+      <div class="totalCard">
+        <strong>태블릿</strong>
+        <input type="number" min="0" step="1" data-inline-total="태블릿" value="${Number(totals["태블릿"]||0)}">
+      </div>
+      <div class="totalCard">
+        <strong>스마트폰</strong>
+        <input type="number" min="0" step="1" data-inline-total="스마트폰" value="${Number(totals["스마트폰"]||0)}">
+      </div>
+    </div>
+  `;
 
-    if(keys.length === 0){
-      elTotalsTable.innerHTML = `<tr><td colspan="3" style="color:var(--muted); font-weight:800;">아직 입력된 수량이 없어요. (0은 표시되지 않습니다)</td></tr>`;
-    }else{
-      elTotalsTable.innerHTML = keys.map(k=>{
-        const isDevice = ALWAYS_SHOW.includes(k);
-        const isManual = Object.prototype.hasOwnProperty.call(current.totalsOverrides||{}, k);
+  el.querySelectorAll('input[data-inline-total]').forEach(inp=>{
+    inp.addEventListener("change", ()=>{
+      const currentData = getCurrentData();
+      const key = inp.getAttribute("data-inline-total");
+      const v = clampInt(inp.value);
+      const base = calcBaseDeviceSums();
+      currentData.manualTotals[key] = true;
 
-        return `
-          <tr>
-            <td>${escapeHtml(k)}</td>
-            <td>
-              <input type="number" min="0" step="1" data-total="${escapeHtml(k)}" value="${Number(totals[k]||0)}">
-            </td>
-            <td>
-              ${isManual
-                ? `<strong style="color:#b00020">수동</strong> <button class="btn no-print" style="padding:6px 8px; margin-left:6px;" data-reset="${escapeHtml(k)}">↺</button>`
-                : isDevice
-                  ? `<span style="color:var(--muted); font-weight:900;">자동+여분</span>`
-                  : `<span style="color:var(--muted); font-weight:900;">자동</span>`
-              }
-            </td>
-          </tr>
-        `;
-      }).join("");
-    }
+      currentData.totalsOverrides[key] = v;
+      if(!currentData.extrasDevices) currentData.extrasDevices = { laptop:0, tablet:0, smartphone:0 };
+      if(key === "노트북") currentData.extrasDevices.laptop = extraVal;
+      if(key === "태블릿") currentData.extrasDevices.tablet = extraVal;
+      if(key === "스마트폰") currentData.extrasDevices.smartphone = extraVal;
 
-    elTotalsTable.querySelectorAll('input[data-total]').forEach(inp=>{
-      inp.addEventListener("input", ()=>{
-        const currentData = getCurrentData();
-        const key = inp.getAttribute("data-total");
-        const v = clampInt(inp.value);
-
-        if(key === "노트북" || key === "태블릿" || key === "스마트폰"){
-          const base = calcBaseDeviceSums();
-          const extraVal =
-            key === "노트북" ? Math.max(0, v - base.laptop) :
-            key === "태블릿" ? Math.max(0, v - base.tablet) :
-                               Math.max(0, v - base.smartphone);
-
-          if(!currentData.extrasDevices) currentData.extrasDevices = { laptop:0, tablet:0, smartphone:0 };
-          if(key === "노트북") currentData.extrasDevices.laptop = extraVal;
-          if(key === "태블릿") currentData.extrasDevices.tablet = extraVal;
-          if(key === "스마트폰") currentData.extrasDevices.smartphone = extraVal;
-
-          if(Object.prototype.hasOwnProperty.call(currentData.totalsOverrides, key)) delete currentData.totalsOverrides[key];
-
-          saveState();
-          renderTotals();
-          renderPreviewOnly();
-          return;
-        }
-
-        if(v === 0) delete currentData.totalsOverrides[key];
-        else currentData.totalsOverrides[key] = v;
-
-        saveState();
-        renderTotals();
-        renderPreviewOnly();
-      });
+      saveState();
+      renderTotalsInline();
+      renderPreviewOnly();
     });
+  });
+}
 
-    elTotalsTable.querySelectorAll('button[data-reset]').forEach(btn=>{
-      btn.addEventListener("click", ()=>{
-        const currentData = getCurrentData();
-        const key = btn.getAttribute("data-reset");
-        delete currentData.totalsOverrides[key];
-        saveState();
-        renderTotals();
-        renderPreviewOnly();
-      });
-    });
-
-    elExtrasTable.innerHTML = current.extras.map((ex, idx)=>`
-      <tr>
-        <td><input type="text" data-ex-item="${idx}" value="${escapeHtml(ex.item||"")}" style="width:100%;"></td>
-        <td><input type="number" min="0" step="1" data-ex-qty="${idx}" value="${Number(ex.qty||0)}"></td>
-        <td class="no-print"><button class="btn" data-ex-del="${idx}">삭제</button></td>
-      </tr>
-    `).join("");
-
-    elExtrasTable.querySelectorAll('input[data-ex-item]').forEach(inp=>{
-      inp.addEventListener("input", ()=>{
-        const currentData = getCurrentData();
-        const i = Number(inp.getAttribute("data-ex-item"));
-        currentData.extras[i].item = inp.value;
-        saveState();
-        renderPreviewOnly();
-        buildPrintArea();
-      });
-    });
-
-    elExtrasTable.querySelectorAll('input[data-ex-qty]').forEach(inp=>{
-      inp.addEventListener("input", ()=>{
-        const currentData = getCurrentData();
-        const i = Number(inp.getAttribute("data-ex-qty"));
-        currentData.extras[i].qty = clampInt(inp.value);
-        saveState();
-        renderPreviewOnly();
-        buildPrintArea();
-      });
-    });
-
-    elExtrasTable.querySelectorAll('button[data-ex-del]').forEach(btn=>{
-      btn.addEventListener("click", ()=>{
-        const currentData = getCurrentData();
-        const i = Number(btn.getAttribute("data-ex-del"));
-        currentData.extras.splice(i,1);
-        saveState();
-        renderTotals();
-        renderPreviewOnly();
-        buildPrintArea();
-      });
-    });
-
-    buildPrintArea();
-  }
 
   function buildProgramText(id){
     const current = getCurrentData();
@@ -2240,6 +2348,33 @@ function bindPrintMenus(){
     };
   }
 
+function buildPreviewProgramText(id){
+  const current = getCurrentData();
+  const p = getCurrentPrograms().find(x=>x.id===id);
+  const d = current.programData[id];
+  if(!p || !d) return null;
+
+  const lines = [];
+  if(Number(d.laptop||0) > 0) lines.push(`- 노트북 ${Number(d.laptop)}`);
+  if(Number(d.tablet||0) > 0) lines.push(`- 태블릿 ${Number(d.tablet)}`);
+  if(Number(d.smartphone||0) > 0) lines.push(`- 스마트폰 ${Number(d.smartphone)}`);
+
+  const memo = (d.notes||"")
+    .split("\n")
+    .map(v => v.trim())
+    .filter(v => v)
+    .filter(v => !v.startsWith("⚠️ 확인"))
+    .filter(v => !v.startsWith("🔋 소모"))
+    .join("\n");
+
+  if(memo) lines.push(memo);
+
+  return {
+    title: `${p.name} (${Number(d.students||0)})`,
+    content: lines.join("\n")
+  };
+}
+
   function buildKakaoText(){
     const current = getCurrentData();
     const meta = current.meta;
@@ -2258,7 +2393,7 @@ function bindPrintMenus(){
     const blocks = [];
 
     for(const id of current.selected){
-      const programBlock = buildProgramText(id);
+      const programBlock = buildPreviewProgramText(id);
       if(!programBlock) continue;
 
       let text = `✔ ${programBlock.title}\n`;
@@ -2268,112 +2403,222 @@ function bindPrintMenus(){
 
     const totals = calcTotals();
     const totalParts = [];
-    if(Number(totals["노트북"]||0) > 0) totalParts.push(`노트북 ${Number(totals["노트북"])}`);
-    if(Number(totals["스마트폰"]||0) > 0) totalParts.push(`스마트폰 ${Number(totals["스마트폰"])}`);
-    if(Number(totals["태블릿"]||0) > 0) totalParts.push(`태블릿 ${Number(totals["태블릿"])}`);
+    if(current.manualTotals?.["노트북"]) totals["노트북"] = current.totalsOverrides["노트북"];
+    if(current.manualTotals?.["태블릿"]) totals["태블릿"] = current.totalsOverrides["태블릿"];
+    if(current.manualTotals?.["스마트폰"]) totals["스마트폰"] = current.totalsOverrides["스마트폰"];
 
     if(totalParts.length){
       blocks.push(`💻 전자기기 총합\n${totalParts.join(" / ")}`);
     }
+const extras = (current.extrasMemo || "").trim();
 
-    const extras = current.extras
-      .map(ex => {
-        const item = (ex.item||"").trim();
-        const qty = Number(ex.qty||0);
-        if(!item || qty <= 0) return null;
-        return `- ${item} ${qty}`;
-      })
-      .filter(Boolean)
-      .join("\n");
-
-    if(extras){
-      blocks.push(`💡추가\n${extras}`);
-    }
+if(extras){
+  blocks.push(`➕추가\n${formatExtrasOneLine(extras)}`);
+}
 
     return `${header}\n${blocks.join("\n\n")}`.trim();
   }
 
-  function renderPreviewOnly(){
-    elPreviewBox.textContent = buildKakaoText();
-    buildPrintArea();
+function parsePreviewText(text){
+  const chunks = String(text || "")
+    .split(/\n{2,}/)
+    .map(v => v.trim())
+    .filter(Boolean);
+
+  let header = "";
+  let totals = "";
+  let extras = "";
+  const programMap = new Map();
+  const order = [];
+
+  for(const chunk of chunks){
+    if(chunk.startsWith("◆ ")){
+      header = chunk;
+    }else if(chunk.startsWith("✔ ")){
+      const firstLine = chunk.split("\n")[0].trim();
+      programMap.set(firstLine, chunk);
+      order.push(firstLine);
+    }else if(chunk.startsWith("💻 ")){
+      totals = chunk;
+    }else if(chunk.startsWith("➕")){
+      extras = chunk;
+    }
   }
 
-  function buildPrintArea(){
-    const current = getCurrentData();
-    const meta = current.meta;
-    const school = (meta.school||"").trim() || "-";
-    const session = (meta.session||"").trim() || "-";
-    const date = (meta.date||"").trim() || "-";
-    const people = Number(meta.people||0);
-    const selectedProgramCount = current.selected.length;
+  return { header, totals, extras, programMap, order };
+}
 
-    const programBlocks = current.selected
-      .map(id => buildProgramText(id))
-      .filter(Boolean)
-      .map(block => `
-        <div class="printProgram">
-          <div class="printProgramTitle">✔ ${escapeHtml(block.title)}</div>
-          <div class="printProgramContent">${escapeHtml(block.content)}</div>
-        </div>
-      `)
-      .join("");
+function mergePreviewText(savedText, autoText){
+  const saved = parsePreviewText(savedText);
+  const auto = parsePreviewText(autoText);
 
-    const totals = calcTotals();
-    const totalParts = [];
-    if(Number(totals["노트북"]||0) > 0) totalParts.push(`노트북 ${Number(totals["노트북"])}`);
-    if(Number(totals["스마트폰"]||0) > 0) totalParts.push(`스마트폰 ${Number(totals["스마트폰"])}`);
-    if(Number(totals["태블릿"]||0) > 0) totalParts.push(`태블릿 ${Number(totals["태블릿"])}`);
+  const mergedBlocks = auto.order.map(title => {
+    return saved.programMap.get(title) || auto.programMap.get(title);
+  }).filter(Boolean);
 
-    const extras = current.extras
-      .map(ex => {
-        const item = (ex.item||"").trim();
-        const qty = Number(ex.qty||0);
-        if(!item || qty <= 0) return null;
-        return `- ${item} ${qty}`;
-      })
-      .filter(Boolean)
-      .join("\n");
+  return [
+    auto.header,
+    ...mergedBlocks,
+    auto.totals,
+    auto.extras
+  ].filter(Boolean).join("\n\n");
+}
 
-    elPrintArea.innerHTML = `
-      <div class="printSheet">
-        <div class="printHead">
-          <div class="printHeadTitle">${getModeLabel(state.mode)} 교구 점검표</div>
-          <div class="printMeta">
-            <div>날짜: ${escapeHtml(date)}</div>
-            <div>학교명: ${escapeHtml(school)}</div>
-            <div>차시: ${escapeHtml(session)}</div>
-            <div>인원: ${people}명</div>
-            <div>선택 프로그램: ${selectedProgramCount}개</div>
-          </div>
-        </div>
+function buildFinalPreviewText(){
+  return elPreviewBox.value || buildKakaoText();
+}
 
-        ${programBlocks}
 
-        ${totalParts.length ? `
-          <div class="printSummary">
-            <div class="printSummaryTitle">💻 총합 기기</div>
-            <div class="printSummaryLine">${escapeHtml(totalParts.join(" / "))}</div>
-          </div>
-        ` : ""}
+function renderPreviewOnly(){
+  const current = getCurrentData();
+  const autoText = buildKakaoText();
+  const mergedText = mergePreviewText(current.previewText || "", autoText);
 
-        ${extras ? `
-          <div class="printSummary">
-            <div class="printSummaryTitle">💡추가</div>
-            <div class="printExtraBlock">${escapeHtml(extras)}</div>
-          </div>
-        ` : ""}
+  current.previewText = mergedText;
+  elPreviewBox.value = mergedText;
+
+  saveState();
+  buildPrintArea();
+}
+
+
+elPreviewBox.addEventListener("input", ()=>{
+  const current = getCurrentData();
+  current.previewText = elPreviewBox.value;
+  saveState();
+});
+
+document.getElementById("btnPreviewReset").onclick = ()=>{
+  const current = getCurrentData();
+  current.previewText = buildKakaoText();
+  saveState();
+  renderPreviewOnly();
+};
+
+
+function buildPrintArea(){
+  const current = getCurrentData();
+  const meta = current.meta;
+  const school = (meta.school||"").trim() || "-";
+  const session = (meta.session||"").trim() || "-";
+  const date = (meta.date||"").trim() || "-";
+  const people = Number(meta.people||0);
+  const selectedCount = current.selected.length;
+
+  const printData = buildPrintText();
+
+  const programsHtml = printData.programBlocks.map(block => {
+    const lines = String(block).split("\n");
+    const title = lines[0] || "";
+    const content = lines.slice(1).join("\n");
+
+    return `
+      <div class="printProgram">
+        <div class="printProgramTitle">${escapeHtml(title)}</div>
+        <div class="printProgramContent">${escapeHtml(content)}</div>
       </div>
     `;
+  }).join("");
+
+const extrasHtml = printData.extras
+  ? `<div class="printProgram">
+      <div class="printProgramTitle">➕추가</div>
+      <div class="printProgramContent">${escapeHtml(formatExtrasOneLine(printData.extras.replace(/^➕추가\s*/, "")))}</div>
+    </div>`
+  : "";
+
+  elPrintArea.innerHTML = `
+    <div class="printSheet">
+      <div class="printHead">
+        <div class="printHeadTitle">${getModeLabel(state.mode)} 교구 점검표</div>
+        <div class="printMeta">
+          <div>날짜: ${escapeHtml(date)}</div>
+          <div>학교명: ${escapeHtml(school)}</div>
+          <div>차시: ${escapeHtml(session)}</div>
+          <div>인원: ${people}명</div>
+          <div>선택 프로그램: ${selectedCount}개</div>
+        </div>
+      </div>
+
+      ${programsHtml}
+      ${extrasHtml}
+    </div>
+  `;
+}
+
+function buildPrintText(){
+  const current = getCurrentData();
+  const meta = current.meta;
+  const date = (meta.date || "").trim();
+  const session = (meta.session || "").trim();
+  const people = Number(meta.people || 0);
+
+
+  const parsed = parsePreviewText(elPreviewBox.value || buildKakaoText());
+
+  const headerParts = [];
+  if(date) headerParts.push(date);
+  if(session) headerParts.push(session);
+
+ const header = "";
+
+  const programBlocks = [];
+
+  for(const id of current.selected){
+    const full = buildProgramText(id);
+    if(!full) continue;
+
+    const savedBlock = parsed.programMap.get(`✔ ${full.title}`);
+    const hiddenLines = (current.programData[id].notes || "")
+      .split("\n")
+      .map(v => v.trim())
+      .filter(v => v.startsWith("⚠️ 확인") || v.startsWith("🔋 소모"));
+
+let contentLines = [];
+
+if(savedBlock){
+  contentLines = savedBlock
+    .split("\n")
+    .slice(1)
+    .map(v => v.trim())
+    .filter(Boolean);
+}else{
+  contentLines = (full.content || "")
+    .split("\n")
+    .map(v => v.trim())
+    .filter(Boolean);
+}
+
+// 이미 들어있는 확인/소모는 제거
+contentLines = contentLines.filter(
+  v => !v.startsWith("⚠️ 확인") && !v.startsWith("🔋 소모")
+);
+
+const merged = [...contentLines, ...hiddenLines];
+
+    programBlocks.push(`✔ ${full.title}\n${merged.join("\n")}`.trim());
   }
+
+  const totals = parsed.totals || "";
+  const extras = parsed.extras || "";
+
+  return {
+    header,
+    programBlocks,
+    totals,
+    extras
+  };
+}
 
 function render(){
   bindMeta();
   updateModeButtons();
   renderProgramList();
   renderAssign();
-  renderTotals();
-  renderPreviewOnly();
   renderInfoNote();
+  renderTotalsInline();
+  renderExtrasMemo();
+  renderPreviewOnly();
   elPickedCount.textContent = String(getCurrentData().selected.length);
 }
 
@@ -2409,16 +2654,10 @@ function render(){
     render();
   };
 
-  document.getElementById("btnAddExtra").onclick = ()=>{
-    const current = getCurrentData();
-    current.extras.push({ item:"", qty:0 });
-    saveState();
-    renderTotals();
-    renderPreviewOnly();
-  };
 
   document.getElementById("btnCopy").onclick = async ()=>{
-    const text = buildKakaoText();
+    const text = buildFinalPreviewText();
+
     try{
       await navigator.clipboard.writeText(text);
       alert("톡용 문구가 복사됐어요");
